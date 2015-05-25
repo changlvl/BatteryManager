@@ -1,12 +1,25 @@
 package com.example.morega03.batterymanager.UI.Fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.morega03.batterymanager.R;
+import com.example.morega03.batterymanager.UI.View.LevelProgressView;
+import com.example.morega03.batterymanager.Utils.BatteryUtils;
+import com.example.morega03.batterymanager.Utils.ComputeForVolume;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -16,10 +29,38 @@ import butterknife.InjectView;
  */
 public class BatteryStatusFragment extends BaseFragment{
     /**
-     * ������״̬��Fragment
+     * ������״̬��Fragment
      */
-
-    @InjectView(R.id.remain_usable_time) TextView remainUsableTime;
+    //电池技术
+    private String technology = null;
+    //电池温度
+    private int temperature = 0;
+    //电池充放电状态
+    private int status = 0;
+    //电量
+    private int level = 0;
+    //电池健康状态
+    private int health = 0;
+    //电量上限
+    private int scale = 100;
+    //充电方式
+    private int plugged = 0;
+    //电压
+    private int voltage = 0;
+    //一个用于记录状态变化的标识符
+    private int volumeflag = 0;
+    //假设的初始容量
+    private double volume = 2000;
+    //用于记录时间的标志
+    private int time1 = 0;
+    //用于记录电量显示的变化
+    private int level1 = 0;
+    @InjectView(R.id.level) TextView levelView;
+    @InjectView(R.id.battery_status_level) ImageView batteryStatusLevel;
+    @InjectView(R.id.battery_status_temperature) TextView batteryStatusTemperature;
+    @InjectView(R.id.charging_or_not) TextView chargingOrNot;
+    @InjectView(R.id.status_from_remain_level) TextView statusFromRemainLevel;
+    @InjectView(R.id.reamin_usable_time) TextView remainUsableTime;
     @InjectView(R.id.phone_type) TextView phoneType;
     @InjectView(R.id.connect_status) TextView connectStatus;
     @InjectView(R.id.battey_status) TextView batteryStatus;
@@ -27,11 +68,11 @@ public class BatteryStatusFragment extends BaseFragment{
     @InjectView(R.id.battery_voltage) TextView batteryVoltage;
     @InjectView(R.id.battery_technology) TextView batteryTechnology;
 
-    //���췽�����������õ���
+    //���췽�����������õ���
     public BatteryStatusFragment(){
 
     }
-    //�������һ�û������
+    //�����һ�û������
     private static class FragmentHolder{
         private static final BatteryStatusFragment INSTANCE = new BatteryStatusFragment();
 
@@ -44,6 +85,7 @@ public class BatteryStatusFragment extends BaseFragment{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -52,13 +94,164 @@ public class BatteryStatusFragment extends BaseFragment{
         View view = inflater.inflate(R.layout.fragment_battery_status,container,false);
 
         ButterKnife.inject(this, view);
+        IntentFilter intentFilter = new IntentFilter();
+        //字面意思应该是发生变化，其实好像是只要找得到电池，就符合这个状态
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        //低电量
+        intentFilter.addAction(Intent.ACTION_BATTERY_LOW);
+        //电量充足
+        intentFilter.addAction(Intent.ACTION_BATTERY_OKAY);
+
+        BroadcastReceiver batteryChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String BatteryAction = intent.getAction();
+                if (BatteryAction.equals(Intent.ACTION_BATTERY_CHANGED)) {
+                    status = intent.getIntExtra("status",0);
+                    health = intent.getIntExtra("health",0);
+                    level = intent.getIntExtra("level",0);
+                    scale = intent.getIntExtra("scale",100);
+                    plugged = intent.getIntExtra("plugged",0);
+                    temperature = intent.getIntExtra("temperature",0);
+                    voltage = intent.getIntExtra("voltage",0);
+                    technology = intent.getStringExtra("technology");
+
+                }
+                setHealth();
+                setStatus();
+                setTemperature();
+                batteryVoltage.setText(String.valueOf((double) voltage / 1000) + "V");
+                batteryTechnology.setText(technology);
+                String type = Build.MODEL +" (Android " + Build.VERSION.RELEASE + ")";
+                phoneType.setText(type);
+                setRemainTime(intent);
+                setLevel(intent);
+
+            }
+        };
+        getActivity().registerReceiver(batteryChangedReceiver, intentFilter);
+
 
 
 
         return view;
     }
+    private void setLevel(Intent intent){
+        LevelProgressView progressView = new LevelProgressView(getActivity());
+        progressView.setCurrentCount(ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
+        progressView.setMaxCount(100);
+        Bitmap bitmap = Bitmap.createBitmap(250,100,Bitmap.Config.ARGB_4444);
+        progressView.draw(new Canvas(bitmap));
+        batteryStatusLevel.setImageBitmap(bitmap);
+        levelView.setText("当前电量："+ ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) + "%");
+    }
+    private void setTemperature(){
+        temperatureStatus.setText(String.valueOf((double) temperature / 10) + "\u2103");
+        batteryStatusTemperature.setText(String.valueOf((double) temperature / 10) + "\u2103");
+        if (temperature/10 < 30){
+            batteryStatusTemperature.setBackgroundColor(Color.GREEN);
+        }else if (temperature/10 <40){
+            batteryStatusTemperature.setBackgroundColor(Color.YELLOW);
+        }else if (temperature/10 >= 40){
+            batteryStatusTemperature.setBackgroundColor(Color.RED);
+        }
+    }
+    private void setHealth(){
+        switch (health){
+            case 0:
+                batteryStatus.setText("error");
+                break;
+            case BatteryManager.BATTERY_HEALTH_UNKNOWN:
+                batteryStatus.setText("Unknown");
+                break;
+            case BatteryManager.BATTERY_HEALTH_OVERHEAT:
+                batteryStatus.setText("Overheat");
+                break;
+            case BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE:
+                batteryStatus.setText("Over voltage");
+                break;
+            case BatteryManager.BATTERY_HEALTH_DEAD:
+                batteryStatus.setText("Dead");
+                break;
+            case BatteryManager.BATTERY_HEALTH_COLD:
+                batteryStatus.setText("Cold");
+                break;
+            case BatteryManager.BATTERY_HEALTH_GOOD:
+                batteryStatus.setText("Good");
+                break;
+        }
+    }
 
-    public void updataBatteryDatas(){
+    private void setStatus(){
+        String sstatus = null ;
+        switch (status){
+            case BatteryManager.BATTERY_STATUS_DISCHARGING:
+                sstatus = "放电中";
+                break;
+            case BatteryManager.BATTERY_STATUS_FULL:
+                sstatus = "已充满";
+                break;
+            case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
+                sstatus = "未充电";
+                break;
+            case BatteryManager.BATTERY_STATUS_UNKNOWN:
+                sstatus = "未知";
+                break;
+            case BatteryManager.BATTERY_STATUS_CHARGING:
+                sstatus = "正在充电：";
+                switch (plugged){
+                    case BatteryManager.BATTERY_PLUGGED_AC:
+                        sstatus += "AC直连";
+                        break;
+                    case BatteryManager.BATTERY_PLUGGED_USB:
+                        sstatus += "USB";
+                        break;
+                    case BatteryManager.BATTERY_PLUGGED_WIRELESS:
+                        sstatus += "无线充电";
+                        break;
+                }
+                break;
+        }
+        connectStatus.setText(sstatus);
+    }
 
+    private void setRemainTime(Intent intent){
+        timeForCharging(volume,ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
+        if (status==BatteryManager.BATTERY_STATUS_CHARGING){
+            chargingOrNot.setText(R.string.needtime_of_charging);
+            String BatteryLevel = BatteryUtils.getBatteryPercentage(intent);
+            String BatteryStatus = BatteryUtils.getBatteryStatus(getActivity().getResources(), intent);
+
+            if (volumeflag == 0 ){
+                time1 = ComputeForVolume.FirstTime();
+                level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
+                volumeflag++;
+            }else if (volumeflag == 1 && ComputeForVolume.getLevel
+                    (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1+1)){
+                if (ComputeForVolume.ComputeVolume(time1,intent)>volume&&ComputeForVolume.ComputeVolume(time1,intent)<5000){
+                    if (ComputeForVolume.ComputeVolume(time1,intent)<volume&&ComputeForVolume.ComputeVolume(time1,intent)>1500){
+                        volume = ComputeForVolume.ComputeVolume(time1,intent);
+                        System.out.println(volume);
+                    }
+                    volumeflag = 0;
+                    timeForCharging(volume,level1+1);
+                }
+            }
+        }else {
+            chargingOrNot.setText(R.string.remain_usable_time);
+            //耗电
+        }
+    }
+
+    private void timeForCharging(double volume,double level){
+        double time = 0;
+        if (plugged == BatteryManager.BATTERY_PLUGGED_AC){
+            time = volume*(100-level)/100*60*60/1000;
+        }else if (plugged == BatteryManager.BATTERY_PLUGGED_USB){
+            time = volume*(100-level)/100*60*60/500;
+        }
+        int hour = (int)time/60/60;
+        int minute = (int)(time-hour*60*60)/60;
+        remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
     }
 }

@@ -33,7 +33,7 @@ public class ComputeForVolume {
         }else if (plugType == BatteryManager.BATTERY_PLUGGED_USB){
             amp = 500;
         }
-        volume = (time2-time1)*amp*100/60/60;
+        volume = (time2-time1)*amp/60*100/60;
         return volume;
     }
     public static int getLevel(int level , int scale){

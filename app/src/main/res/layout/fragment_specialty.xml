@@ -3,8 +3,55 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/specialty_tab_name"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/location_button"
+            android:layout_width="60dp"
+            android:layout_height="100dp" />
+        <Button
+            android:id="@+id/wifi_button"
+            android:layout_width="60dp"
+            android:layout_height="100dp" />
+        <Button
+            android:id="@+id/bluetooth_button"
+            android:layout_width="60dp"
+            android:layout_height="100dp" />
+        <Button
+            android:id="@+id/hotpoint_button"
+            android:layout_width="60dp"
+            android:layout_height="100dp" />
+        <Button
+            android:id="@+id/more_power_saving_button"
+            android:layout_width="60dp"
+            android:layout_height="100dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="100dp"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:text="@string/remain_usable_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/reamin_usable_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:background="@drawable/border"
+        android:text="@string/battery_dally_maintenance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

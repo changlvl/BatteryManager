@@ -41,12 +41,13 @@ public class MainActivity extends BaseActivity{
 //        intentFilter.addAction(Intent.ACTION_BATTERY_LOW);
 //        //电量充足
 //        intentFilter.addAction(Intent.ACTION_BATTERY_OKAY);
-
+//
 //        BroadcastReceiver batteryChangedReceiver = new BroadcastReceiver(){
 //            @Override
 //            public void onReceive(Context context,Intent intent){
 //                String BatteryAction = intent.getAction();
 //                if (BatteryAction.equals(Intent.ACTION_BATTERY_CHANGED)){
+
 //                    String BatteryLevel = BatteryUtils.getBatteryPercentage(intent);
 //                    String BatteryStatus = BatteryUtils.getBatteryStatus(MainActivity.this.getResources(), intent);
 //                    BetteryMessage = context.getResources().getString(R.string.power_usage_level_and_status,BatteryLevel,BatteryStatus);
@@ -74,7 +75,11 @@ public class MainActivity extends BaseActivity{
 //                }
 //            }
 //        };
-//        registerReceiver(batteryChangedReceiver,intentFilter);
+//        registerReceiver(batteryChangedReceiver, intentFilter);
+
+
+
+
         super.onCreate(savedInstanceState);
     }
 
