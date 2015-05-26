@@ -27,6 +27,9 @@ public class ComputeForVolume {
         int minute2 = calendar2.get(Calendar.MINUTE);
         int seconds2 = calendar2.get(Calendar.SECOND);
         int time2 = hour2*60*60 + minute2*60 + seconds2;
+//        if ((time2-time1) > 600){
+//            return 0;
+//        }
         int plugType = intent.getIntExtra("plugged", 0);
         if (plugType == BatteryManager.BATTERY_PLUGGED_AC){
             amp = 1000;

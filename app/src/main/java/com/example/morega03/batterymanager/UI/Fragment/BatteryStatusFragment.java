@@ -55,6 +55,7 @@ public class BatteryStatusFragment extends BaseFragment{
     private int time1 = 0;
     //用于记录电量显示的变化
     private int level1 = 0;
+    BroadcastReceiver batteryChangedReceiver;
     @InjectView(R.id.level) TextView levelView;
     @InjectView(R.id.battery_status_level) ImageView batteryStatusLevel;
     @InjectView(R.id.battery_status_temperature) TextView batteryStatusTemperature;
@@ -102,7 +103,7 @@ public class BatteryStatusFragment extends BaseFragment{
         //电量充足
         intentFilter.addAction(Intent.ACTION_BATTERY_OKAY);
 
-        BroadcastReceiver batteryChangedReceiver = new BroadcastReceiver() {
+        batteryChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String BatteryAction = intent.getAction();
@@ -136,6 +137,8 @@ public class BatteryStatusFragment extends BaseFragment{
 
         return view;
     }
+
+
     private void setLevel(Intent intent){
         LevelProgressView progressView = new LevelProgressView(getActivity());
         progressView.setCurrentCount(ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
@@ -228,15 +231,16 @@ public class BatteryStatusFragment extends BaseFragment{
                 volumeflag++;
             }else if (volumeflag == 1 && ComputeForVolume.getLevel
                     (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1+1)){
-                if (ComputeForVolume.ComputeVolume(time1,intent)>volume&&ComputeForVolume.ComputeVolume(time1,intent)<5000){
-                    if (ComputeForVolume.ComputeVolume(time1,intent)<volume&&ComputeForVolume.ComputeVolume(time1,intent)>1500){
-                        volume = ComputeForVolume.ComputeVolume(time1,intent);
-                        System.out.println(volume);
-                    }
+                if (ComputeForVolume.ComputeVolume(time1,intent)>1500){
+                    volume = ComputeForVolume.ComputeVolume(time1,intent);
+                    System.out.println(volume);
                     volumeflag = 0;
                     timeForCharging(volume,level1+1);
                 }
             }
+        }else if (status == BatteryManager.BATTERY_STATUS_FULL){
+            chargingOrNot.setText("已充满");
+            remainUsableTime.setText("");
         }else {
             chargingOrNot.setText(R.string.remain_usable_time);
             //耗电

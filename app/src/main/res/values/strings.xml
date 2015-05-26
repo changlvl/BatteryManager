@@ -42,5 +42,11 @@
     <string name="find_tab_name">发现</string>
     <string name="specialty_tab_name">高级</string>
     <string name="battery_dally_maintenance">每日电池检测和维护</string>
+    <string name="location_on_or_off">定位开关</string>
+    <string name="wiwi_on_or_off">Wifi开关</string>
+    <string name="data_on_or_off">3g/4g</string>
+    <string name="bluetooth_on_or_off">蓝牙开关</string>
+    <string name="heatpoint_on_or_off">热点开关</string>
+    <string name="more_power_saving">更省电</string>
     
 </resources>
