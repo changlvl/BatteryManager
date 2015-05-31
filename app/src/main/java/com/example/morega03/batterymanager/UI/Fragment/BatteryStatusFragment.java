@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.morega03.batterymanager.R;
 import com.example.morega03.batterymanager.UI.MainActivity;
@@ -62,6 +63,8 @@ public class BatteryStatusFragment extends BaseFragment{
     private double volume = 2000;
     //假设的初始放电容量
     private final double volume_out = 2000;
+    //剩余可用的时间
+    private double remainTime = 0;
     //用于记录时间的标志
     private int time1 = 0;
     //用于记录电量显示的变化
@@ -279,28 +282,31 @@ public class BatteryStatusFragment extends BaseFragment{
                 level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
                 timeForAwait(volume_out,level1);
                 volumeflag_out++;
-            }else if (ComputeForVolume.getLevel
+            }else if ( volumeflag_out == 1 && ComputeForVolume.getLevel
                     (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1-1)){
                 chargingOrNot.setText(R.string.remain_usable_time);
-                ComputeUsingTime(time1, ComputeForVolume.getLevel
+                remainTime = ComputeUsingTime(time1, ComputeForVolume.getLevel
                         (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
-                volumeflag_out = 2;
-            }else if (volumeflag_out == 2){
-                chargingOrNot.setText(R.string.remain_usable_time);
+                timeToShow(remainTime);
                 time1 = ComputeForVolume.FirstTime();
                 level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
-                volumeflag_out = 3;
-            }else if (volumeflag_out == 3){
-
+                volumeflag_out = 2;
+            }else if (volumeflag_out == 2){
+                timeToShow(remainTime);
+                if (ComputeForVolume.getLevel
+                        (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1-1)){
+                    volumeflag_out = 1;
+                }
+                volumeflag_out = 1;
             } else {
-                timeForAwait(volume_out,ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
+                timeForAwait(volume_out, ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
             }
 
-
+            Toast.makeText(getActivity(),String.valueOf(volumeflag_out),Toast.LENGTH_SHORT).show();
         }
     }
     //剩余可用时间
-    private void ComputeUsingTime(int time1,int level){
+    private double ComputeUsingTime(int time1,int level){
         double time;
         Calendar calendar2 = Calendar.getInstance();
         int hour2 = calendar2.get(Calendar.HOUR_OF_DAY);
@@ -308,6 +314,11 @@ public class BatteryStatusFragment extends BaseFragment{
         int seconds2 = calendar2.get(Calendar.SECOND);
         int time2 = hour2*60*60 + minute2*60 + seconds2;
         time = (time2-time1)*level;
+        return time;
+
+    }
+    //time转换为可显示时间
+    private void timeToShow(double time){
         int hour = (int)time/60/60;
         int minute = (int)(time-hour*60*60)/60;
         remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
