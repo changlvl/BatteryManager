@@ -31,6 +31,7 @@
     <string name="battery_status_temperature">状态界面的温度显示</string>
     <string name="battery_status_level">状态界面的电量显示</string>
     <string name="remain_usable_time">剩余可用时间：</string>
+    <string name="remain_time">待机可用时间：</string>
     <string name="needtime_of_charging">预计充电剩余：</string>
     <string name="battery_info_analyse">电池信息分析</string>
     <string name="phone_type">手机型号：</string>

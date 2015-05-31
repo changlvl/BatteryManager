@@ -47,7 +47,7 @@ public class LevelProgressView extends View{
         super.onDraw(canvas);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        int round = mHeight/2;
+        int round = mHeight/6;
         System.out.println("max="+maxCount + "  current="+currentCount);
         mPaint.setColor(Color.rgb(71, 76, 80));
         RectF rectBg = new RectF(0, 0, mWidth, mHeight);

@@ -42,4 +42,6 @@ public class ComputeForVolume {
     public static int getLevel(int level , int scale){
         return (level*100)/scale;
     }
+
+
 }

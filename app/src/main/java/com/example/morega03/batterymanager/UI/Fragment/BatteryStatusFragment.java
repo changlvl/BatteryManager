@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,8 +24,9 @@ import android.widget.TextView;
 import com.example.morega03.batterymanager.R;
 import com.example.morega03.batterymanager.UI.MainActivity;
 import com.example.morega03.batterymanager.UI.View.LevelProgressView;
-import com.example.morega03.batterymanager.Utils.BatteryUtils;
 import com.example.morega03.batterymanager.Utils.ComputeForVolume;
+
+import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -52,10 +54,14 @@ public class BatteryStatusFragment extends BaseFragment{
     private int plugged = 0;
     //电压
     private int voltage = 0;
+    //一个用于记录是否待机的标识符
+    private int volumeflag_out = 0;
     //一个用于记录状态变化的标识符
     private int volumeflag = 0;
-    //假设的初始容量
+    //假设的初始充电容量
     private double volume = 2000;
+    //假设的初始放电容量
+    private final double volume_out = 2000;
     //用于记录时间的标志
     private int time1 = 0;
     //用于记录电量显示的变化
@@ -131,6 +137,7 @@ public class BatteryStatusFragment extends BaseFragment{
                 String type = Build.MODEL +" (Android " + Build.VERSION.RELEASE + ")";
                 phoneType.setText(type);
                 setRemainTime(intent);
+                System.out.print("volumeflag_out:" + volumeflag_out);
                 setLevel(intent);
 
             }
@@ -143,13 +150,14 @@ public class BatteryStatusFragment extends BaseFragment{
         return view;
     }
 
-
+    //显示状态栏
     private void showNotifyStatus(){
         NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder mBuilder = new Notification.Builder(getActivity());
         RemoteViews mRemoteViews = new RemoteViews(getActivity().getPackageName(),R.layout.status_notify);
         mRemoteViews.setImageViewResource(R.id.notify_level, R.drawable.abc_ic_commit_search_api_mtrl_alpha);
         mRemoteViews.setImageViewResource(R.id.notify_temperature, R.drawable.abc_btn_radio_to_on_mtrl_015);
+
         mRemoteViews.setTextViewText(R.id.notify_status, "充电已完成");
         mRemoteViews.setTextViewText(R.id.notify_advice, "sdfjslkfjsdlkfjsdlfjslfjslkfjsdlkfjd");
         Intent intent = new Intent(getActivity(),MainActivity.class);
@@ -159,17 +167,17 @@ public class BatteryStatusFragment extends BaseFragment{
                 .setPriority(Notification.PRIORITY_MAX)
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_launcher);
-        notificationManager.notify(0,mBuilder.build());
+        notificationManager.notify(0, mBuilder.build());
     }
 
     private void setLevel(Intent intent){
         LevelProgressView progressView = new LevelProgressView(getActivity());
         progressView.setCurrentCount(ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
         progressView.setMaxCount(100);
-        Bitmap bitmap = Bitmap.createBitmap(250,100,Bitmap.Config.ARGB_4444);
+        Bitmap bitmap = Bitmap.createBitmap(250, 100, Bitmap.Config.ARGB_4444);
         progressView.draw(new Canvas(bitmap));
         batteryStatusLevel.setImageBitmap(bitmap);
-        levelView.setText("当前电量："+ ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) + "%");
+        levelView.setText("当前电量：" + ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) + "%");
     }
     private void setTemperature(){
         temperatureStatus.setText(String.valueOf((double) temperature / 10) + "\u2103");
@@ -242,12 +250,11 @@ public class BatteryStatusFragment extends BaseFragment{
     }
 
     private void setRemainTime(Intent intent){
-        timeForCharging(volume,ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
-        if (status==BatteryManager.BATTERY_STATUS_CHARGING){
-            chargingOrNot.setText(R.string.needtime_of_charging);
-            String BatteryLevel = BatteryUtils.getBatteryPercentage(intent);
-            String BatteryStatus = BatteryUtils.getBatteryStatus(getActivity().getResources(), intent);
 
+        if (status==BatteryManager.BATTERY_STATUS_CHARGING){
+            timeForCharging(volume, ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
+            chargingOrNot.setText(R.string.needtime_of_charging);
+            volumeflag_out = 0;
             if (volumeflag == 0 ){
                 time1 = ComputeForVolume.FirstTime();
                 level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
@@ -265,11 +272,73 @@ public class BatteryStatusFragment extends BaseFragment{
             chargingOrNot.setText("已充满");
             remainUsableTime.setText("");
         }else {
-            chargingOrNot.setText(R.string.remain_usable_time);
-            //耗电
+            if (volumeflag_out==0){
+                chargingOrNot.setText(R.string.remain_time);
+                //TODO replace volume_out to a value in type
+                time1 = ComputeForVolume.FirstTime();
+                level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
+                timeForAwait(volume_out,level1);
+                volumeflag_out++;
+            }else if (ComputeForVolume.getLevel
+                    (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1-1)){
+                chargingOrNot.setText(R.string.remain_usable_time);
+                ComputeUsingTime(time1, ComputeForVolume.getLevel
+                        (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
+                volumeflag_out = 2;
+            }else if (volumeflag_out == 2){
+                chargingOrNot.setText(R.string.remain_usable_time);
+                time1 = ComputeForVolume.FirstTime();
+                level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
+                volumeflag_out = 3;
+            }else if (volumeflag_out == 3){
+
+            } else {
+                timeForAwait(volume_out,ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
+            }
+
+
         }
     }
+    //剩余可用时间
+    private void ComputeUsingTime(int time1,int level){
+        double time;
+        Calendar calendar2 = Calendar.getInstance();
+        int hour2 = calendar2.get(Calendar.HOUR_OF_DAY);
+        int minute2 = calendar2.get(Calendar.MINUTE);
+        int seconds2 = calendar2.get(Calendar.SECOND);
+        int time2 = hour2*60*60 + minute2*60 + seconds2;
+        time = (time2-time1)*level;
+        int hour = (int)time/60/60;
+        int minute = (int)(time-hour*60*60)/60;
+        remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
+    }
+    //剩余待机时间
+    private void timeForAwait(double volume_out,double level){
+        double time;
+        double using = 0.0281481481;
+        if (SpecialtyFragment.GPSisOPen(getActivity())){
+            using += 0.007;
+        }
+        if (SpecialtyFragment.is3rd(getActivity())){
+            using += 0.001;
+        }
+        if (SpecialtyFragment.isBluetoothOn(getActivity())){
+            using += 0.0006;
+        }
+        WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager.isWifiEnabled()){
+            using += 0.0013;
+        }
+        if (SpecialtyFragment.isHeatpointTag(getActivity())){
+            using += 0.01;
+        }
+        time = volume_out*level/100/using;
+        int hour = (int)time/60/60;
+        int minute = (int)(time-hour*60*60)/60;
+        remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
+    }
 
+    //剩余充电时间
     private void timeForCharging(double volume,double level){
         double time = 0;
         if (plugged == BatteryManager.BATTERY_PLUGGED_AC){

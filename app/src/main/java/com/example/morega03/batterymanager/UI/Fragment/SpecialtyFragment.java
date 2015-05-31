@@ -229,7 +229,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
             dataButton.setBackgroundColor(Color.GRAY);
         }
         //判断蓝牙的初始状态
-        bluetoothTag = isBluetoothOn();
+        bluetoothTag = isBluetoothOn(getActivity());
         if (bluetoothTag){
             bluetoothTag = true;
             bluetoothButton.setText("on");
@@ -240,7 +240,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
             bluetoothButton.setBackgroundColor(Color.GRAY);
         }
 
-        heatpointTag = isHeatpointTag();
+        heatpointTag = isHeatpointTag(getActivity());
         if (heatpointTag){
             heatpointButton.setText("on");
             heatpointButton.setBackgroundColor(Color.BLUE);
@@ -251,8 +251,8 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     }
 
 
-    private boolean isHeatpointTag(){
-        WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+    public static boolean isHeatpointTag(Context context){
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         try {
             Method method = wifiManager.getClass().getMethod("getWifiApState");
             int i = (int)method.invoke(wifiManager);
@@ -268,11 +268,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
 
 
     //判断蓝牙的初始状态
-    private boolean isBluetoothOn(){
+    public static boolean isBluetoothOn(Context context){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
                 .getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            Toast.makeText(getActivity(), "本机没有找到蓝牙硬件或驱动！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "本机没有找到蓝牙硬件或驱动！", Toast.LENGTH_SHORT).show();
         }
 
         return mBluetoothAdapter.isEnabled();
