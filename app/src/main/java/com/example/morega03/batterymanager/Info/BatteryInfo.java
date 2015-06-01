@@ -59,6 +59,10 @@ public class BatteryInfo {
         IDLE, CELL, PHONE, WIFI, BLUETOOTH, SCREEN, APP, KERNEL, MEDIASERVER;
     }
 
+    public enum SystemType{
+        SYSTEM,APP;
+    }
+
     public BatteryInfo(Context context) {
         testType = 1;
         mContext = context;
@@ -134,6 +138,7 @@ public class BatteryInfo {
         return list;
     }
 
+
     private long getAppProcessTime(int pid) {
         FileInputStream in = null;
         String ret = null;
@@ -202,6 +207,7 @@ public class BatteryInfo {
                 if (templist.containsKey(info.processName)) {
                     BatterySipper sipper = templist.get(info.processName);
                     sipper.setValue(sipper.getValue() + time);
+
                 } else {
                     templist.put(info.processName, new BatterySipper(mContext, info.processName, time));
                 }
@@ -211,8 +217,10 @@ public class BatteryInfo {
                     if (templist.containsKey(pkgName)) {
                         BatterySipper sipper = templist.get(pkgName);
                         sipper.setValue(sipper.getValue() + time);
+                        sipper.setPackageName(pkgName);
                     } else {
                         templist.put(pkgName, new BatterySipper(mContext, pkgName, time));
+
                     }
                     totalTime += time;
                 }

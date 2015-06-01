@@ -9,11 +9,11 @@ import android.graphics.drawable.Drawable;
 import android.os.BatteryStats.Uid;
 
 import com.example.morega03.batterymanager.Info.BatteryInfo.DrainType;
-import com.example.morega03.batterymanager.Info.BatteryInfo;
+import com.example.morega03.batterymanager.Info.BatteryInfo.SystemType;
 
 import java.util.HashMap;
 
-class BatterySipper implements Comparable<BatterySipper> {
+public class BatterySipper implements Comparable<BatterySipper> {
 
     private final Context mContext;
     private final HashMap<String, UidToDetail> mUidCache = new HashMap<String, UidToDetail>();
@@ -35,6 +35,25 @@ class BatterySipper implements Comparable<BatterySipper> {
     private String defaultPackageName;
     private DrainType drainType;
 
+    public SystemType getSystemType() {
+        return systemType;
+    }
+
+    public void setSystemType(SystemType systemType) {
+        this.systemType = systemType;
+    }
+
+    private SystemType systemType;
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    private String packageName;
     static class UidToDetail {
         String name;
         String packageName;
@@ -112,7 +131,14 @@ class BatterySipper implements Comparable<BatterySipper> {
         try {
             ApplicationInfo appInfo = pm.getApplicationInfo(pkgName, 0);
             icon = appInfo.loadIcon(pm);// pm.getApplicationIcon(appInfo);
-            name = appInfo.loadLabel(pm).toString();// pm.getApplicationLabel(appInfo).toString();
+            name = appInfo.loadLabel(pm).toString();
+            packageName = pkgName;
+            if ((appInfo.flags & appInfo.FLAG_SYSTEM) > 0){
+                systemType = SystemType.SYSTEM;
+            }else {
+                systemType = SystemType.APP;
+            }
+            // pm.getApplicationLabel(appInfo).toString();
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }

@@ -49,5 +49,6 @@
     <string name="bluetooth_on_or_off">蓝牙开关</string>
     <string name="heatpoint_on_or_off">热点开关</string>
     <string name="more_power_saving">更省电</string>
+    <string name="ranking_list">24小时耗电排行榜</string>
     
 </resources>

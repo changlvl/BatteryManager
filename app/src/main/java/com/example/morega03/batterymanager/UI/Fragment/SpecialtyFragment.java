@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.morega03.batterymanager.R;
+import com.example.morega03.batterymanager.UI.RankingListActivity;
 
 import java.lang.reflect.Method;
 
@@ -29,19 +30,36 @@ import butterknife.InjectView;
  * Created by Morega03 on 2015/5/24.
  */
 public class SpecialtyFragment extends BaseFragment implements View.OnClickListener,View.OnLongClickListener{
-
+//    OnHeadlineSelectedListener mCallback;
     private boolean locationTag = false;
     private boolean wifiTag = false;
     private boolean dataTag = false;
     private boolean bluetoothTag = false;
     private boolean heatpointTag = false;
-    private boolean morePowerSavingTag = false;
+
     @InjectView(R.id.location_button) Button locationButton;
     @InjectView(R.id.wifi_button) Button wifiButton;
     @InjectView(R.id.data_button) Button dataButton;
     @InjectView(R.id.bluetooth_button) Button bluetoothButton;
     @InjectView(R.id.heatpoint_button) Button heatpointButton;
     @InjectView(R.id.more_power_saving_button) Button morePowerSavingButton;
+    // Container Activity must implement this interface
+//    public interface OnHeadlineSelectedListener{
+//        public void onArticleSelected();
+//    }
+
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        // This makes sure that the container activity has implemented
+//        // the callback interface. If not, it throws an exception
+//        try {
+//            mCallback = (OnHeadlineSelectedListener) activity;
+//        }catch (ClassCastException e){
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnHeadlineSelectedListener");
+//        }
+//    }
 
     @Override
     public boolean onLongClick(View v) {
@@ -62,7 +80,9 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
                 break;
             case R.id.more_power_saving_button:
-                startActivity(new Intent(Settings.ACTION_LOCALE_SETTINGS));
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), RankingListActivity.class);
+                startActivity(intent);
                 break;
         }
 
@@ -140,15 +160,13 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 }
                 break;
             case R.id.more_power_saving_button:
-                if (morePowerSavingTag){
-                    morePowerSavingButton.setText("off");
-                    morePowerSavingButton.setBackgroundColor(Color.GRAY);
-                    morePowerSavingTag = false;
-                }else {
-                    morePowerSavingButton.setText("on");
-                    morePowerSavingButton.setBackgroundColor(Color.BLUE);
-                    morePowerSavingTag = true;
-                }
+//                RankingListFragment fragment = new RankingListFragment();;
+//                android.support.v4.app.FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//                transaction.add(R.id.id_content,fragment).commit();
+//                mCallback.onArticleSelected();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), RankingListActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -183,11 +201,13 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         wifiButton.setOnLongClickListener(this);
         dataButton.setOnClickListener(this);
         dataButton.setOnLongClickListener(this);
+
         bluetoothButton.setOnClickListener(this);
         bluetoothButton.setOnLongClickListener(this);
         heatpointButton.setOnClickListener(this);
         heatpointButton.setOnLongClickListener(this);
         morePowerSavingButton.setOnClickListener(this);
+        morePowerSavingButton.setOnLongClickListener(this);
 
 
         return view;

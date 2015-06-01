@@ -1,8 +1,5 @@
 package com.example.morega03.batterymanager.UI.Fragment;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,12 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RemoteViews;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.morega03.batterymanager.R;
-import com.example.morega03.batterymanager.UI.MainActivity;
+import com.example.morega03.batterymanager.UI.ShowNotifyStatus;
 import com.example.morega03.batterymanager.UI.View.LevelProgressView;
 import com.example.morega03.batterymanager.Utils.ComputeForVolume;
 
@@ -142,35 +137,16 @@ public class BatteryStatusFragment extends BaseFragment{
                 setRemainTime(intent);
                 System.out.print("volumeflag_out:" + volumeflag_out);
                 setLevel(intent);
+                ShowNotifyStatus.showNotifyStatus(getActivity(),intent);
 
             }
         };
         getActivity().registerReceiver(batteryChangedReceiver, intentFilter);
 
 
-       showNotifyStatus();
+
 
         return view;
-    }
-
-    //显示状态栏
-    private void showNotifyStatus(){
-        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification.Builder mBuilder = new Notification.Builder(getActivity());
-        RemoteViews mRemoteViews = new RemoteViews(getActivity().getPackageName(),R.layout.status_notify);
-        mRemoteViews.setImageViewResource(R.id.notify_level, R.drawable.abc_ic_commit_search_api_mtrl_alpha);
-        mRemoteViews.setImageViewResource(R.id.notify_temperature, R.drawable.abc_btn_radio_to_on_mtrl_015);
-
-        mRemoteViews.setTextViewText(R.id.notify_status, "充电已完成");
-        mRemoteViews.setTextViewText(R.id.notify_advice, "sdfjslkfjsdlkfjsdlfjslfjslkfjsdlkfjd");
-        Intent intent = new Intent(getActivity(),MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),0,intent,0);
-        mBuilder.setContent(mRemoteViews)
-                .setContentIntent(pendingIntent)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_launcher);
-        notificationManager.notify(0, mBuilder.build());
     }
 
     private void setLevel(Intent intent){
@@ -302,7 +278,7 @@ public class BatteryStatusFragment extends BaseFragment{
                 timeForAwait(volume_out, ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
             }
 
-            Toast.makeText(getActivity(),String.valueOf(volumeflag_out),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(),String.valueOf(volumeflag_out),Toast.LENGTH_SHORT).show();
         }
     }
     //剩余可用时间

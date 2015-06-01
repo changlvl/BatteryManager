@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     >
     <ImageView
-        android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:id="@+id/notify_level"/>
@@ -13,7 +12,6 @@
         android:layout_marginLeft="10dp"
         android:layout_width="30dp"
         android:layout_height="50dp"
-        android:src="@drawable/abc_ic_clear_mtrl_alpha"
         android:id="@+id/notify_temperature"/>
 
     <LinearLayout
@@ -22,12 +20,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/notify_status"
             android:text="充电已完成"/>
 
         <TextView
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/notify_advice"
