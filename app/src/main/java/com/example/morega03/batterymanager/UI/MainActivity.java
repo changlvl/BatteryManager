@@ -46,6 +46,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         super.onCreate(savedInstanceState);
+        myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),
+                getApplicationContext());
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mViewPager.setAdapter(myViewPagerAdapter);
     }
 
 
@@ -134,11 +138,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        //this.finish();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        //this.finish();
     }
 
 

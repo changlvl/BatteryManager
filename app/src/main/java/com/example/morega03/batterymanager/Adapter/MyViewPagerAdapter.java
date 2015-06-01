@@ -29,11 +29,11 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter{
     public Fragment getItem(int position){
         switch (position){
             case 0:
-                return BatteryStatusFragment.getInstance();
+                return new BatteryStatusFragment();
             case 1:
-                return FindFragment.getInstance();
+                return new FindFragment();
             case 2:
-                return SpecialtyFragment.getInstance();
+                return new SpecialtyFragment();
         }
 
         return null;
