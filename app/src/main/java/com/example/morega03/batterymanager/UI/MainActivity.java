@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //this.finish();
+        this.finish();
     }
 
     @Override

@@ -298,5 +298,16 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
         }
         context.startActivity(intent);
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.finish();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(RankingListActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
 }
