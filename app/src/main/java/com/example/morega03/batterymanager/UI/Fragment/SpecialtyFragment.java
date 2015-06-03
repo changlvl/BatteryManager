@@ -1,27 +1,35 @@
 package com.example.morega03.batterymanager.UI.Fragment;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.morega03.batterymanager.R;
 import com.example.morega03.batterymanager.UI.RankingListActivity;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,13 +44,27 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     private boolean dataTag = false;
     private boolean bluetoothTag = false;
     private boolean heatpointTag = false;
-
+    private ArrayList<ImageView> list;
+    private ArrayList<AnimationDrawable> animList;
+    private boolean hasWrong = true;
+    private int wrong = (int)(Math.random() * 10);
     @InjectView(R.id.location_button) Button locationButton;
     @InjectView(R.id.wifi_button) Button wifiButton;
     @InjectView(R.id.data_button) Button dataButton;
     @InjectView(R.id.bluetooth_button) Button bluetoothButton;
     @InjectView(R.id.heatpoint_button) Button heatpointButton;
     @InjectView(R.id.more_power_saving_button) Button morePowerSavingButton;
+    @InjectView(R.id.repair_1) ImageView repair1;
+    @InjectView(R.id.repair_2) ImageView repair2;
+    @InjectView(R.id.repair_3) ImageView repair3;
+    @InjectView(R.id.repair_4) ImageView repair4;
+    @InjectView(R.id.repair_5) ImageView repair5;
+    @InjectView(R.id.repair_6) ImageView repair6;
+    @InjectView(R.id.repair_7) ImageView repair7;
+    @InjectView(R.id.repair_8) ImageView repair8;
+    @InjectView(R.id.repair_9) ImageView repair9;
+    @InjectView(R.id.repair_10) ImageView repair10;
+    @InjectView(R.id.start_repair_button) Button startRepairButton;
     // Container Activity must implement this interface
 //    public interface OnHeadlineSelectedListener{
 //        public void onArticleSelected();
@@ -208,6 +230,20 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         heatpointButton.setOnLongClickListener(this);
         morePowerSavingButton.setOnClickListener(this);
         morePowerSavingButton.setOnLongClickListener(this);
+        list = new ArrayList<>();
+        animList = new ArrayList<>();
+        list.add(repair1);
+        list.add(repair2);
+        list.add(repair3);
+        list.add(repair4);
+        list.add(repair5);
+        list.add(repair6);
+        list.add(repair7);
+        list.add(repair8);
+        list.add(repair9);
+        list.add(repair10);
+
+        registeAnim();
 
 
         return view;
@@ -217,6 +253,103 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     public void onStart() {
         super.onStart();
         init();
+    }
+    //注册动画
+    private void registeAnim(){
+
+        for (int i=0;i<10;i++){
+            if (i == wrong){
+                list.get(i).setBackgroundResource(R.drawable.drawable_anim_wrong);
+            }else {
+                list.get(i).setBackgroundResource(R.drawable.drawable_anim);
+            }
+            AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
+            animList.add(anim);
+        }
+        startRepairButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int time = 0;
+                Timer timer = new Timer();
+                //startRepairButton.setClickable(false);
+                for (int i=0;i<10;i++){
+                    final int j = i;
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            animList.get(j).stop();
+                            animList.get(j).start();
+
+                        }
+                    };
+                    timer.schedule(task,time);
+                    time+=2000;
+                }
+                if (hasWrong){
+                    final int i = wrong;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage("您的电池存在一些小问题，修复成功后将提高电池的续航能力");
+                            builder.setTitle("提示");
+                            builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    list.get(i).setBackgroundResource(R.drawable.drawable_anim_repair);
+                                    AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
+                                    anim.stop();
+                                    anim.start();
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
+                                            successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
+                                            successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                    initAnim();
+                                                }
+                                            });
+                                            successBuilder.create().show();
+                                        }
+                                    }, 7000);
+                                }
+                            });
+
+                            builder.create().show();
+                            hasWrong = false;
+                        }
+                    },20000);
+                }else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
+                        }
+                    },20000);
+
+                }
+            }
+        });
+    }
+    //每次检查完成后，要初始化图片，以便下一次检测
+    private void initAnim(){
+        animList = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            list.get(i).setBackgroundResource(R.drawable.ic_launcher);
+            list.get(i).setBackgroundResource(R.drawable.drawable_anim);
+            AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
+            animList.add(anim);
+        }
     }
 
     //设置几个Button的初始状态

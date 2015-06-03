@@ -99,6 +99,12 @@ public class BatteryStatusFragment extends BaseFragment{
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().unregisterReceiver(batteryChangedReceiver);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_battery_status,container,false);
