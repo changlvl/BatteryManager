@@ -66,7 +66,7 @@ public class BatteryInfo {
     public BatteryInfo(Context context) {
         testType = 1;
         mContext = context;
-        mBatteryInfo = IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
+        mBatteryInfo = IBatteryStats.Stub.asInterface(ServiceManager.getService("batterystats"));
         mPowerProfile = new PowerProfile(context);
     }
 

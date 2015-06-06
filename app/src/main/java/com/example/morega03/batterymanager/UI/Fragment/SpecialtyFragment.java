@@ -3,6 +3,7 @@ package com.example.morega03.batterymanager.UI.Fragment;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -93,7 +95,15 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                 break;
             case R.id.data_button:
-                startActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS));
+                if (Build.VERSION.SDK_INT>=21){
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName(
+                            "com.android.settings",
+                            "com.android.settings.Settings$DataUsageSummaryActivity"));
+                    startActivity(intent);
+                }else {
+                    startActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS));
+                }
                 break;
             case R.id.bluetooth_button:
                 startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
@@ -144,12 +154,12 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 break;
             case R.id.data_button:
                 if (dataTag){
-                    setMobileData(getActivity(),false);
+                    setMobileData(getActivity(), false);
                     dataButton.setText("off");
                     dataButton.setBackgroundColor(Color.GRAY);
                     dataTag = false;
                 }else {
-                    setMobileData(getActivity(),true);
+                    setMobileData(getActivity(), true);
                     dataButton.setText("on");
                     dataButton.setBackgroundColor(Color.BLUE);
                     dataTag = true;
@@ -269,74 +279,87 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         startRepairButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int time = 0;
-                Timer timer = new Timer();
-                //startRepairButton.setClickable(false);
-                for (int i=0;i<10;i++){
-                    final int j = i;
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            animList.get(j).stop();
-                            animList.get(j).start();
+                WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+                if (is3rd(getActivity()) || wifiManager.isWifiEnabled()) {
+                    int time = 0;
+                    Timer timer = new Timer();
+                    //startRepairButton.setClickable(false);
+                    for (int i = 0; i < 10; i++) {
+                        final int j = i;
+                        TimerTask task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                animList.get(j).stop();
+                                animList.get(j).start();
 
-                        }
-                    };
-                    timer.schedule(task,time);
-                    time+=2000;
-                }
-                if (hasWrong){
-                    final int i = wrong;
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setMessage("您的电池存在一些小问题，修复成功后将提高电池的续航能力");
-                            builder.setTitle("提示");
-                            builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    list.get(i).setBackgroundResource(R.drawable.drawable_anim_repair);
-                                    AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
-                                    anim.stop();
-                                    anim.start();
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
-                                            successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
-                                            successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                    initAnim();
-                                                }
-                                            });
-                                            successBuilder.create().show();
-                                        }
-                                    }, 7000);
-                                }
-                            });
+                            }
+                        };
+                        timer.schedule(task, time);
+                        time += 2000;
+                    }
+                    if (hasWrong) {
+                        final int i = wrong;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setMessage("您的电池存在一些小问题，修复成功后将提高电池的续航能力");
+                                builder.setTitle("提示");
+                                builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        list.get(i).setBackgroundResource(R.drawable.drawable_anim_repair);
+                                        AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
+                                        anim.stop();
+                                        anim.start();
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
+                                                successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
+                                                successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                        initAnim();
+                                                    }
+                                                });
+                                                successBuilder.create().show();
+                                            }
+                                        }, 7000);
+                                    }
+                                });
 
-                            builder.create().show();
-                            hasWrong = false;
-                        }
-                    },20000);
-                }else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
-                        }
-                    },20000);
+                                builder.create().show();
+                                hasWrong = false;
+                            }
+                        }, 20000);
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
+                            }
+                        }, 20000);
 
+                    }
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("只有在联通网络状态下才能修复电池噢！~");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
                 }
             }
         });
@@ -434,27 +457,35 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
 
     //开关数据连接
     public static void setMobileData(Context pContext, boolean pBoolean) {
+        if (Build.VERSION.SDK_INT>=21){
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(
+                    "com.android.settings",
+                    "com.android.settings.Settings$DataUsageSummaryActivity"));
+            pContext.startActivity(intent);
 
-        try {
+        }else {
+            try {
 
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) pContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                ConnectivityManager mConnectivityManager = (ConnectivityManager) pContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-            Class ownerClass = mConnectivityManager.getClass();
+                Class ownerClass = mConnectivityManager.getClass();
 
-            Class[] argsClass = new Class[1];
-            argsClass[0] = boolean.class;
+                Class[] argsClass = new Class[1];
+                argsClass[0] = boolean.class;
 
-            Method method = ownerClass.getMethod("setMobileDataEnabled", argsClass);
+                Method method = ownerClass.getMethod("setMobileDataEnabled", argsClass);
 
-            method.invoke(mConnectivityManager, pBoolean);
+                method.invoke(mConnectivityManager, pBoolean);
 
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            System.out.println("移动数据设置错误: " + e.toString());
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                System.out.println("移动数据设置错误: " + e.toString());
+            }
         }
-    }
 
+    }
     //判断是否开启数据连接    注意：当Wifi开启的时候，数据连接会显示未打开
     public static boolean is3rd(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
@@ -491,15 +522,22 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
      * @param context
      */
     public static final void openGPS(Context context) {
-        Intent GPSIntent = new Intent();
-        GPSIntent.setClassName("com.android.settings",
-                "com.android.settings.widget.SettingsAppWidgetProvider");
-        GPSIntent.addCategory("android.intent.category.ALTERNATIVE");
-        GPSIntent.setData(Uri.parse("custom:3"));
-        try {
-            PendingIntent.getBroadcast(context, 0, GPSIntent, 0).send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
+        if (Build.VERSION.SDK_INT>=21){
+            context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
+        else {
+            Intent GPSIntent = new Intent();
+            GPSIntent.setClassName("com.android.settings",
+                    "com.android.settings.widget.SettingsAppWidgetProvider");
+            GPSIntent.addCategory("android.intent.category.ALTERNATIVE");
+            GPSIntent.setData(Uri.parse("custom:3"));
+            try {
+                PendingIntent.getBroadcast(context, 0, GPSIntent, 0).send();
+            } catch (PendingIntent.CanceledException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
+
 }

@@ -101,7 +101,7 @@ public class BatteryStatusFragment extends BaseFragment{
     @Override
     public void onStop() {
         super.onStop();
-        getActivity().unregisterReceiver(batteryChangedReceiver);
+//        getActivity().unregisterReceiver(batteryChangedReceiver);
     }
 
     @Override
@@ -144,6 +144,7 @@ public class BatteryStatusFragment extends BaseFragment{
                 System.out.print("volumeflag_out:" + volumeflag_out);
                 setLevel(intent);
                 ShowNotifyStatus.showNotifyStatus(getActivity(),intent);
+
 
             }
         };

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -113,15 +114,18 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case PROGRESS_DIALOG_ID:
-                progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("正在玩命加载~");
-                return progressDialog;
+                if (progressDialog==null){
+                    progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage("正在玩命加载~");
+                    return progressDialog;
+                }
         }
         return null;
     };
 
     @Override
-    public void onRefresh() {
+    public void onRefresh()
+    {
         mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
     }
 
@@ -298,16 +302,21 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
         }
         context.startActivity(intent);
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.finish();
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        this.finish();
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        Intent intent = new Intent(RankingListActivity.this,MainActivity.class);
+//        startActivity(intent);
+//    }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(RankingListActivity.this,MainActivity.class);
-        startActivity(intent);
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

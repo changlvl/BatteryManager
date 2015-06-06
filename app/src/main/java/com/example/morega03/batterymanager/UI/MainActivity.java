@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.example.morega03.batterymanager.Adapter.MyViewPagerAdapter;
 import com.example.morega03.batterymanager.R;
@@ -22,6 +24,7 @@ public class MainActivity extends BaseActivity {
 //    //电池容量
 //    private double volume = 1500;
 //    private int level1 = 0;
+    private long exitTime = 0;
     private MyViewPagerAdapter myViewPagerAdapter;
     public static MainActivity mainActivity;
     FragmentManager fragmentManager;
@@ -138,7 +141,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        this.finish();
+        //this.finish();
     }
 
     @Override
@@ -146,6 +149,19 @@ public class MainActivity extends BaseActivity {
         super.onStop();
         //this.finish();
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }

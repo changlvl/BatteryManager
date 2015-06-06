@@ -20,7 +20,8 @@
         android:orientation="vertical">
 
         <TextView
-            android:textSize="20dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/notify_status"
