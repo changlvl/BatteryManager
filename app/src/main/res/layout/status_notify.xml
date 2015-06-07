@@ -22,12 +22,14 @@
         <TextView
             android:layout_marginLeft="10dp"
             android:textSize="16dp"
+            style="@style/NotificationTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/notify_status"
             android:text="充电已完成"/>
 
         <TextView
+            style="@style/NotificationText"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
