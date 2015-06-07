@@ -279,6 +279,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         startRepairButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startRepairButton.setClickable(false);
                 WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
                 if (is3rd(getActivity()) || wifiManager.isWifiEnabled()) {
                     int time = 0;
@@ -289,13 +290,15 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                         TimerTask task = new TimerTask() {
                             @Override
                             public void run() {
+
                                 animList.get(j).stop();
                                 animList.get(j).start();
-
                             }
+
                         };
                         timer.schedule(task, time);
                         time += 2000;
+                        startRepairButton.setText("正在检查电池");
                     }
                     if (hasWrong) {
                         final int i = wrong;
@@ -314,6 +317,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                                 builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        startRepairButton.setText("正在努力修复");
                                         dialog.dismiss();
                                         list.get(i).setBackgroundResource(R.drawable.drawable_anim_repair);
                                         AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
@@ -346,8 +350,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                             @Override
                             public void run() {
                                 Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
+                                initAnim();
                             }
+
                         }, 20000);
+
 
                     }
                 } else {
@@ -366,6 +373,8 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     }
     //每次检查完成后，要初始化图片，以便下一次检测
     private void initAnim(){
+        startRepairButton.setText("start");
+        startRepairButton.setClickable(true);
         animList = new ArrayList<>();
         for (int i=0;i<10;i++){
             list.get(i).setBackgroundResource(R.drawable.ic_launcher);
