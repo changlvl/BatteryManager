@@ -101,7 +101,7 @@ public class BatteryStatusFragment extends BaseFragment{
     @Override
     public void onStop() {
         super.onStop();
-//        getActivity().unregisterReceiver(batteryChangedReceiver);
+        getActivity().unregisterReceiver(batteryChangedReceiver);
     }
 
     @Override

@@ -250,9 +250,9 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
             }
             if (sipper.getSystemType() == BatteryInfo.SystemType.APP
             && !ActivityUtils.isRunningApp(RankingListActivity.this,sipper.getPackageName())){
-                holder.button.setText("已关闭");
+                holder.button.setText("不活跃");
                 holder.button.setBackgroundColor(Color.parseColor("#000000"));
-                holder.button.setClickable(false);
+
             }
             double percentOfTotal = sipper.getPercentOfTotal();
             holder.textProgress.setText(format(percentOfTotal));
