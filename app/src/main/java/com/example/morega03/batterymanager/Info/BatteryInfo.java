@@ -192,6 +192,7 @@ public class BatteryInfo {
     }
 
     private List<BatterySipper> getAppListCpuTime() {
+        BatterySipper android = null;
         testType = 2;
         final List<BatterySipper> list = new ArrayList<BatterySipper>();
 
@@ -228,8 +229,21 @@ public class BatteryInfo {
         }
 
         if (totalTime == 0) totalTime = 1;
-
         list.addAll(templist.values());
+        for (int i = list.size() - 1; i >= 0; i--){
+            BatterySipper sipper = list.get(i);
+            if (sipper.getPackageName().equals("android")){
+                android = sipper;
+            }
+        }
+        for (int i = list.size() - 1; i >= 0; i--){
+            BatterySipper sipper = list.get(i);
+            if (sipper.getValue()==android.getValue()&&!sipper.getPackageName().equals("android")){
+                list.remove(i);
+                totalTime -= sipper.getValue();
+            }
+        }
+
         for (int i = list.size() - 1; i >= 0; i--) {
             BatterySipper sipper = list.get(i);
             double percentOfTotal = sipper.getValue() * 100 / totalTime;
