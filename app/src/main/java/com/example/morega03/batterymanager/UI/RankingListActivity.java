@@ -223,7 +223,7 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
                 holder.textProgress = (TextView) convertView.findViewById(R.id.txtProgress);
                 holder.progress = (ProgressBar) convertView.findViewById(R.id.progress);
                 holder.button = (TextView) convertView.findViewById(R.id.racking_button);
-                holder.applicationDescribe = (TextView) findViewById(R.id.application_describe);
+                holder.applicationDescribe = (TextView) convertView.findViewById(R.id.application_describe);
                 convertView.setTag(holder);
             } else {
                 holder = (Holder) convertView.getTag();
@@ -257,7 +257,24 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
             double percentOfTotal = sipper.getPercentOfTotal();
             holder.textProgress.setText(format(percentOfTotal));
             holder.progress.setProgress((int) percentOfTotal);
-
+            if (sipper.getSystemType() == BatteryInfo.SystemType.SYSTEM){
+                if (percentOfTotal>=20){
+                    holder.applicationDescribe.setText("虽然耗电巨大，但是很重要噢！~");
+                }else {
+                    holder.applicationDescribe.setText("系统应用，关闭需谨慎。");
+                }
+            }
+            if (sipper.getSystemType() == BatteryInfo.SystemType.APP){
+                if (percentOfTotal>=10){
+                    holder.applicationDescribe.setText("耗电达人，杀死它杀死它！");
+                }else {
+                    holder.applicationDescribe.setText("一个平凡的应用。");
+                }
+            }
+            if (sipper.getSystemType() == BatteryInfo.SystemType.APP
+                    && !ActivityUtils.isRunningApp(RankingListActivity.this,sipper.getPackageName())){
+                holder.applicationDescribe.setText("它曾经耗电过，后来它死了……");
+            }
             return convertView;
         }
     }
