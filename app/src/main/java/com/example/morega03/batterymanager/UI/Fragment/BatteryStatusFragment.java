@@ -21,6 +21,7 @@ import com.example.morega03.batterymanager.R;
 import com.example.morega03.batterymanager.UI.ShowNotifyStatus;
 import com.example.morega03.batterymanager.UI.View.LevelProgressView;
 import com.example.morega03.batterymanager.Utils.ComputeForVolume;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
 
@@ -93,15 +94,27 @@ public class BatteryStatusFragment extends BaseFragment{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainScreen"); //统计页面
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainScreen");
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        getActivity().unregisterReceiver(batteryChangedReceiver);
+//        getActivity().unregisterReceiver(batteryChangedReceiver);
     }
 
     @Override

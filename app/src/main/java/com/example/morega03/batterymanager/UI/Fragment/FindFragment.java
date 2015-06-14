@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.morega03.batterymanager.R;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -27,7 +28,11 @@ public class FindFragment extends BaseFragment{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainScreen"); //统计页面
+    }
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container,
                              Bundle savedInstanceState){
@@ -38,5 +43,10 @@ public class FindFragment extends BaseFragment{
 
 
         return view;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainScreen");
     }
 }

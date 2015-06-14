@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.example.morega03.batterymanager.Adapter.MyViewPagerAdapter;
 import com.example.morega03.batterymanager.R;
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -49,10 +51,13 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.updateOnlineConfig(MainActivity.this);
+        AnalyticsConfig.enableEncrypt(false);
         myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),
                 getApplicationContext());
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mViewPager.setAdapter(myViewPagerAdapter);
+
     }
 
 
@@ -131,7 +136,12 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);//统计时长
+        MobclickAgent.onPageStart("SplashScreen");//统计页面(仅有Activity的应用中SDK自动调用，不需要单独写)
+    }
 
     @Override
     protected void onStart() {
@@ -142,6 +152,9 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         //this.finish();
+        MobclickAgent.onPageEnd("SplashScreen");// （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause
+        // 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
     }
 
     @Override

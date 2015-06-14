@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.morega03.batterymanager.R;
 import com.example.morega03.batterymanager.UI.RankingListActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -216,7 +217,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainScreen"); //统计页面
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container,
@@ -547,6 +552,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
             }
         }
 
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainScreen");
     }
 
 }

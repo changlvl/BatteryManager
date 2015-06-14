@@ -17,11 +17,11 @@ public class BatteryBroadCastReceiver extends BroadcastReceiver{
         this.mainActivity = activity;
     }
 
+    public BatteryBroadCastReceiver(){
+
+    }
+
     @Override
     public void onReceive(Context context, Intent intent){
-        String BatteryAction = intent.getAction();
-        if (BatteryAction.equals(Intent.ACTION_BATTERY_CHANGED)){
-
-        }
     }
 }
