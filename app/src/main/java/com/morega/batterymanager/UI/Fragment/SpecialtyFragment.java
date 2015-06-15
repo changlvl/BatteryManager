@@ -284,94 +284,120 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         startRepairButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startRepairButton.setClickable(false);
-                WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
-                if (is3rd(getActivity()) || wifiManager.isWifiEnabled()) {
-                    int time = 0;
-                    Timer timer = new Timer();
-                    //startRepairButton.setClickable(false);
-                    for (int i = 0; i < 10; i++) {
-                        final int j = i;
-                        TimerTask task = new TimerTask() {
-                            @Override
-                            public void run() {
-
-                                animList.get(j).stop();
-                                animList.get(j).start();
-                            }
-
-                        };
-                        timer.schedule(task, time);
-                        time += 2000;
-                        startRepairButton.setText("正在检查电池");
-                    }
-                    if (hasWrong) {
-                        final int i = wrong;
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setMessage("您的电池存在一些小问题，修复成功后将提高电池的续航能力");
-                                builder.setTitle("提示");
-                                builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        startRepairButton.setText("正在努力修复");
-                                        dialog.dismiss();
-                                        list.get(i).setBackgroundResource(R.drawable.drawable_anim_repair);
-                                        AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
-                                        anim.stop();
-                                        anim.start();
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
-                                                successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
-                                                successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        dialog.dismiss();
-                                                        initAnim();
-                                                    }
-                                                });
-                                                successBuilder.create().show();
-                                            }
-                                        }, 7000);
-                                    }
-                                });
-
-                                builder.create().show();
-                                hasWrong = false;
-                            }
-                        }, 20000);
-                    } else {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
-                                initAnim();
-                            }
-
-                        }, 20000);
-
-
-                    }
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("只有在联通网络状态下才能修复电池噢！~");
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                if (startRepairButton.getText().equals("修复")){
+                    startRepairButton.setText("正在努力修复");
+                    list.get(wrong).setBackgroundResource(R.drawable.drawable_anim_repair);
+                    AnimationDrawable anim = (AnimationDrawable) list.get(wrong).getBackground();
+                    anim.stop();
+                    anim.start();
+                    new Handler().postDelayed(new Runnable() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+                        public void run() {
+                            AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
+                            successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
+                            successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    initAnim();
+                                }
+                            });
+                            successBuilder.create().show();
                         }
-                    });
-                    builder.create().show();
+                    }, 7000);
+                }
+                else{
+                    startRepairButton.setClickable(false);
+                    WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+                    if (is3rd(getActivity()) || wifiManager.isWifiEnabled()) {
+                        int time = 0;
+                        Timer timer = new Timer();
+                        //startRepairButton.setClickable(false);
+                        for (int i = 0; i < 10; i++) {
+                            final int j = i;
+                            TimerTask task = new TimerTask() {
+                                @Override
+                                public void run() {
+
+                                    animList.get(j).stop();
+                                    animList.get(j).start();
+                                }
+
+                            };
+                            timer.schedule(task, time);
+                            time += 2000;
+                            startRepairButton.setText("正在检查电池");
+                        }
+                        if (hasWrong) {
+                            final int i = wrong;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setMessage("您的电池存在一些小问题，修复成功后将提高电池的续航能力");
+                                    builder.setTitle("提示");
+                                    builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            startRepairButton.setText("修复");
+                                            startRepairButton.setClickable(true);
+                                        }
+                                    });
+                                    builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            startRepairButton.setText("正在努力修复");
+                                            dialog.dismiss();
+                                            list.get(i).setBackgroundResource(R.drawable.drawable_anim_repair);
+                                            AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
+                                            anim.stop();
+                                            anim.start();
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
+                                                    successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
+                                                    successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                            initAnim();
+                                                        }
+                                                    });
+                                                    successBuilder.create().show();
+                                                }
+                                            }, 7000);
+                                        }
+                                    });
+
+                                    builder.create().show();
+                                    hasWrong = false;
+                                }
+                            }, 20000);
+                        } else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
+                                    initAnim();
+                                }
+
+                            }, 20000);
+
+
+                        }
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("只有在联通网络状态下才能修复电池噢！~");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.create().show();
+                    }
                 }
             }
         });
