@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.UI;
+package com.morega.batterymanager.UI;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,8 +9,8 @@ import android.graphics.Color;
 import android.os.BatteryManager;
 import android.widget.RemoteViews;
 
-import com.example.morega03.batterymanager.R;
-import com.example.morega03.batterymanager.Utils.ComputeForVolume;
+import com.morega.batterymanager.R;
+import com.morega.batterymanager.Utils.ComputeForVolume;
 
 /**
  * Created by Morega03 on 2015/6/1.

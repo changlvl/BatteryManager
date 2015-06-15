@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.Info;
+package com.morega.batterymanager.Info;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
@@ -15,7 +15,7 @@ import android.util.SparseArray;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.os.BatteryStatsImpl;
 import com.android.internal.os.PowerProfile;
-import com.example.morega03.batterymanager.Utils.BatteryUtils;
+import com.morega.batterymanager.Utils.BatteryUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -413,14 +413,14 @@ public class BatteryInfo {
             double power = 0;
             double highestDrain = 0;
             String packageWithHighestDrain = null;
-            Map<String, ? extends BatteryStats.Uid.Proc> processStats = u.getProcessStats();
+            Map<String, ? extends Uid.Proc> processStats = u.getProcessStats();
             long cpuTime = 0;
             long cpuFgTime = 0;
             long wakelockTime = 0;
             long gpsTime = 0;
             if (processStats.size() > 0) {
                 // 1, Process CPU time
-                for (Map.Entry<String, ? extends BatteryStats.Uid.Proc> ent : processStats.entrySet()) {
+                for (Map.Entry<String, ? extends Uid.Proc> ent : processStats.entrySet()) {
                     if (DEBUG)
                         Log.i(TAG, "Process name = " + ent.getKey());
 
@@ -464,8 +464,8 @@ public class BatteryInfo {
             power /= 1000;
 
             // 2, Process wake lock usage
-            Map<String, ? extends BatteryStats.Uid.Wakelock> wakelockStats = u.getWakelockStats();
-            for (Map.Entry<String, ? extends BatteryStats.Uid.Wakelock> wakelockEntry : wakelockStats.entrySet()) {
+            Map<String, ? extends Uid.Wakelock> wakelockStats = u.getWakelockStats();
+            for (Map.Entry<String, ? extends Uid.Wakelock> wakelockEntry : wakelockStats.entrySet()) {
                 Uid.Wakelock wakelock = wakelockEntry.getValue();
                 // Only care about partial wake locks since full wake locks are canceled when the user turns the screen off.
                 BatteryStats.Timer timer = wakelock.getWakeTime(BatteryStats.WAKE_TYPE_PARTIAL);
@@ -490,8 +490,8 @@ public class BatteryInfo {
             }
 
             // 5, Process Sensor usage
-            Map<Integer, ? extends BatteryStats.Uid.Sensor> sensorStats = u.getSensorStats();
-            for (Map.Entry<Integer, ? extends BatteryStats.Uid.Sensor> sensorEntry : sensorStats.entrySet()) {
+            Map<Integer, ? extends Uid.Sensor> sensorStats = u.getSensorStats();
+            for (Map.Entry<Integer, ? extends Uid.Sensor> sensorEntry : sensorStats.entrySet()) {
                 Uid.Sensor sensor = sensorEntry.getValue();
                 int sensorType = sensor.getHandle();
                 BatteryStats.Timer timer = sensor.getSensorTime();

@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.Utils;
+package com.morega.batterymanager.Utils;
 
 import android.content.Intent;
 import android.os.BatteryManager;

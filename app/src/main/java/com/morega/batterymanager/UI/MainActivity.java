@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.UI;
+package com.morega.batterymanager.UI;
 
 import android.app.ActionBar;
 import android.app.FragmentManager;
@@ -8,8 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-import com.example.morega03.batterymanager.Adapter.MyViewPagerAdapter;
-import com.example.morega03.batterymanager.R;
+import com.morega.batterymanager.R;
+import com.morega.batterymanager.Adapter.MyViewPagerAdapter;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 
@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity {
 //    //电池容量
 //    private double volume = 1500;
 //    private int level1 = 0;
+
     private long exitTime = 0;
     private MyViewPagerAdapter myViewPagerAdapter;
     public static MainActivity mainActivity;
@@ -51,6 +52,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         super.onCreate(savedInstanceState);
+//        UmengUpdateAgent.setUpdateOnlyWifi(false);
+//        UmengUpdateAgent.update(this);
         MobclickAgent.updateOnlineConfig(MainActivity.this);
         AnalyticsConfig.enableEncrypt(false);
         myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),
@@ -59,7 +62,6 @@ public class MainActivity extends BaseActivity {
         mViewPager.setAdapter(myViewPagerAdapter);
 
     }
-
 
     @Override
     public void initData() {

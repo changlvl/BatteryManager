@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.UI.Fragment;
+package com.morega.batterymanager.UI.Fragment;
 
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -25,8 +25,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.morega03.batterymanager.R;
-import com.example.morega03.batterymanager.UI.RankingListActivity;
+import com.morega.batterymanager.R;
+import com.morega.batterymanager.UI.RankingListActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Method;

@@ -1,13 +1,13 @@
-package com.example.morega03.batterymanager.Adapter;
+package com.morega.batterymanager.Adapter;
 
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.morega03.batterymanager.UI.Fragment.BatteryStatusFragment;
-import com.example.morega03.batterymanager.UI.Fragment.FindFragment;
-import com.example.morega03.batterymanager.UI.Fragment.SpecialtyFragment;
+import com.morega.batterymanager.UI.Fragment.BatteryStatusFragment;
+import com.morega.batterymanager.UI.Fragment.FindFragment;
+import com.morega.batterymanager.UI.Fragment.SpecialtyFragment;
 
 /**
  * Created by Morega03 on 2015/5/24.

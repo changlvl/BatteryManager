@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.UI.View;
+package com.morega.batterymanager.UI.View;
 
 import android.content.Context;
 import android.graphics.Canvas;

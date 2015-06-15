@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.UI.Fragment;
+package com.morega.batterymanager.UI.Fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.morega03.batterymanager.R;
-import com.example.morega03.batterymanager.UI.ShowNotifyStatus;
-import com.example.morega03.batterymanager.UI.View.LevelProgressView;
-import com.example.morega03.batterymanager.Utils.ComputeForVolume;
+import com.morega.batterymanager.R;
+import com.morega.batterymanager.UI.ShowNotifyStatus;
+import com.morega.batterymanager.UI.View.LevelProgressView;
+import com.morega.batterymanager.Utils.ComputeForVolume;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
@@ -31,7 +31,7 @@ import butterknife.InjectView;
 /**
  * Created by Morega03 on 2015/5/24.
  */
-public class BatteryStatusFragment extends BaseFragment{
+public class BatteryStatusFragment extends BaseFragment {
     /**
      * ������״̬��Fragment
      */
@@ -156,7 +156,7 @@ public class BatteryStatusFragment extends BaseFragment{
                 setRemainTime(intent);
                 System.out.print("volumeflag_out:" + volumeflag_out);
                 setLevel(intent);
-                ShowNotifyStatus.showNotifyStatus(getActivity(),intent);
+                ShowNotifyStatus.showNotifyStatus(getActivity(), intent);
 
 
             }
@@ -256,12 +256,12 @@ public class BatteryStatusFragment extends BaseFragment{
             volumeflag_out = 0;
             if (volumeflag == 0 ){
                 time1 = ComputeForVolume.FirstTime();
-                level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
+                level1 = ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
                 volumeflag++;
             }else if (volumeflag == 1 && ComputeForVolume.getLevel
-                    (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1+1)){
-                if (ComputeForVolume.ComputeVolume(time1,intent)>1500){
-                    volume = ComputeForVolume.ComputeVolume(time1,intent);
+                    (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) ==(level1+1)){
+                if (ComputeForVolume.ComputeVolume(time1, intent)>1500){
+                    volume = ComputeForVolume.ComputeVolume(time1, intent);
                     System.out.println(volume);
                     volumeflag = 0;
                     timeForCharging(volume,level1+1);
@@ -275,22 +275,22 @@ public class BatteryStatusFragment extends BaseFragment{
                 chargingOrNot.setText(R.string.remain_time);
                 //TODO replace volume_out to a value in type
                 time1 = ComputeForVolume.FirstTime();
-                level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
+                level1 = ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
                 timeForAwait(volume_out,level1);
                 volumeflag_out++;
             }else if ( volumeflag_out == 1 && ComputeForVolume.getLevel
-                    (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1-1)){
+                    (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) ==(level1-1)){
                 chargingOrNot.setText(R.string.remain_usable_time);
                 remainTime = ComputeUsingTime(time1, ComputeForVolume.getLevel
                         (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
                 timeToShow(remainTime);
                 time1 = ComputeForVolume.FirstTime();
-                level1 =ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
+                level1 = ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
                 volumeflag_out = 2;
             }else if (volumeflag_out == 2){
                 timeToShow(remainTime);
                 if (ComputeForVolume.getLevel
-                        (intent.getIntExtra("level",0),intent.getIntExtra("scale",100)) ==(level1-1)){
+                        (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) ==(level1-1)){
                     volumeflag_out = 1;
                 }
                 volumeflag_out = 1;

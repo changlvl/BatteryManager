@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.Info;
+package com.morega.batterymanager.Info;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -8,8 +8,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.BatteryStats.Uid;
 
-import com.example.morega03.batterymanager.Info.BatteryInfo.DrainType;
-import com.example.morega03.batterymanager.Info.BatteryInfo.SystemType;
+import com.morega.batterymanager.Info.BatteryInfo.DrainType;
+import com.morega.batterymanager.Info.BatteryInfo.SystemType;
 
 import java.util.HashMap;
 
@@ -67,7 +67,7 @@ public class BatterySipper implements Comparable<BatterySipper> {
         getQuickNameIcon(pkgName);
     }
 
-    public BatterySipper(Context context, BatteryInfo.DrainType type, Uid uid, double[] values) {
+    public BatterySipper(Context context, DrainType type, Uid uid, double[] values) {
         mContext = context;
         this.values = values;
         this.drainType = type;
@@ -177,7 +177,7 @@ public class BatterySipper implements Comparable<BatterySipper> {
     /**
      * Sets name and icon
      *
-     * @param uid
+
      *            Uid of the application
      */
     private void getNameIcon() {

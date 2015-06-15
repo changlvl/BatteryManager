@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.Utils;
+package com.morega.batterymanager.Utils;
 
 /**
  * Created by Morega03 on 2015/5/23.

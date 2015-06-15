@@ -1,11 +1,11 @@
-package com.example.morega03.batterymanager.UI.Fragment;
+package com.morega.batterymanager.UI.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.morega03.batterymanager.R;
+import com.morega.batterymanager.R;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Morega03 on 2015/5/24.
  */
-public class FindFragment extends BaseFragment{
+public class FindFragment extends BaseFragment {
 
     private static class FragmentHolder{
         private static final FindFragment INSTANCE = new FindFragment();

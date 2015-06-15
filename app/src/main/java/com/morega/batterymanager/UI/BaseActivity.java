@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.UI;
+package com.morega.batterymanager.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

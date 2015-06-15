@@ -1,11 +1,11 @@
-package com.example.morega03.batterymanager.Utils;
+package com.morega.batterymanager.Utils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.BatteryManager;
 
-import com.example.morega03.batterymanager.R;
+import com.morega.batterymanager.R;
 
 /**
  * Created by Morega03 on 2015/5/19.

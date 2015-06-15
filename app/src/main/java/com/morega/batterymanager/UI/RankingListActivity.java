@@ -1,4 +1,4 @@
-package com.example.morega03.batterymanager.UI;
+package com.morega.batterymanager.UI;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,10 +25,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.morega03.batterymanager.Info.BatteryInfo;
-import com.example.morega03.batterymanager.Info.BatterySipper;
-import com.example.morega03.batterymanager.R;
-import com.example.morega03.batterymanager.Utils.ActivityUtils;
+import com.morega.batterymanager.R;
+import com.morega.batterymanager.Info.BatteryInfo;
+import com.morega.batterymanager.Info.BatterySipper;
+import com.morega.batterymanager.Utils.ActivityUtils;
 
 import java.util.List;
 
@@ -244,12 +244,12 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
                 holder.button.setBackgroundColor(Color.parseColor("#206060"));
             }
             if (sipper.getSystemType() == BatteryInfo.SystemType.APP
-                    && ActivityUtils.isRunningApp(RankingListActivity.this,sipper.getPackageName())){
+                    && ActivityUtils.isRunningApp(RankingListActivity.this, sipper.getPackageName())){
                 holder.button.setText("关闭");
                 holder.button.setBackgroundColor(Color.parseColor("#206020"));
             }
             if (sipper.getSystemType() == BatteryInfo.SystemType.APP
-            && !ActivityUtils.isRunningApp(RankingListActivity.this,sipper.getPackageName())){
+            && !ActivityUtils.isRunningApp(RankingListActivity.this, sipper.getPackageName())){
                 holder.button.setText("不活跃");
                 holder.button.setBackgroundColor(Color.parseColor("#000000"));
 
@@ -272,7 +272,7 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
                 }
             }
             if (sipper.getSystemType() == BatteryInfo.SystemType.APP
-                    && !ActivityUtils.isRunningApp(RankingListActivity.this,sipper.getPackageName())){
+                    && !ActivityUtils.isRunningApp(RankingListActivity.this, sipper.getPackageName())){
                 holder.applicationDescribe.setText("它曾经耗电过，后来它死了……");
             }
             return convertView;
