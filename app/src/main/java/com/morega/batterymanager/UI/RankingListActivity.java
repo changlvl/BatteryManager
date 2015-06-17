@@ -25,9 +25,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.morega.batterymanager.R;
 import com.morega.batterymanager.Info.BatteryInfo;
 import com.morega.batterymanager.Info.BatterySipper;
+import com.morega.batterymanager.R;
 import com.morega.batterymanager.Utils.ActivityUtils;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
      */
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
     private final int PROGRESS_DIALOG_ID = 1;
-    private ListView list;
+    protected ListView list;
     private customAdapter adapter;
     private BatteryInfo info;
     private ProgressDialog progressDialog;
@@ -74,7 +74,6 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
         adapter = new customAdapter();
         list.setAdapter(adapter);
         info = new BatteryInfo(this);
-        info.setMinPercentOfTotal(0.01);
         getBatteryStats();
     }
 
@@ -102,7 +101,6 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
                     break;
                 case  REFRESH_COMPLETE:
                     info = new BatteryInfo(RankingListActivity.this);
-                    info.setMinPercentOfTotal(0.01);
                     getBatteryStats();
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
@@ -121,7 +119,7 @@ public class RankingListActivity extends Activity implements SwipeRefreshLayout.
                 }
         }
         return null;
-    };
+    }
 
     @Override
     public void onRefresh()

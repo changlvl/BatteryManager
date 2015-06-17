@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">BatteryManager</string>
+    <string name="battery_dally_maintenance">每日电池检测和维护</string>
+    <string name="battery_info_analyse">电池信息分析</string>
+    <string name="battery_info_status_charging">正在充电</string>
+    <string name="battery_info_status_charging_ac">（交流电）</string>
+    <string name="battery_info_status_charging_usb">(USB)</string>
+    <string name="battery_info_status_charging_wireless">(无线充电)</string>
+    <string name="battery_info_status_discharging">正在耗电</string>
+    <string name="battery_info_status_full">电量充足</string>
+    <string name="battery_info_status_not_charging">未在充电</string>
+    <string name="battery_info_status_unknown">未知</string>
+    <string name="battery_status">电池状态：</string>
+    <string name="battery_status_level">状态界面的电量显示</string>
+    <string name="battery_status_temperature">状态界面的温度显示</string>
+    <string name="battery_technology">电池技术：</string>
+    <string name="battery_voltage">电池电压：</string>
+    <string name="bluetooth_on_or_off">蓝牙开关</string>
+    <string name="connect_status">连接情况：</string>
+    <string name="data_on_or_off">3g/4g</string>
+    <string name="find_tab_name">发现</string>
+    <string name="heatpoint_on_or_off">热点开关</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="location_on_or_off">定位开关</string>
+    <string name="menu_settings">Settings</string>
+    <string name="more_power_saving">更省电</string>
+    <string name="needtime_of_charging">预计充电剩余：</string>
+    <string name="phone_type">手机型号：</string>
+    <string name="power_bluetooth">蓝牙</string>
+    <string name="power_cell">手机信号</string>
+    <string name="power_idle">手机待机</string>
+    <string name="power_phone">语音通话</string>
+    <string name="power_screen">显示屏</string>
+    <string name="power_wifi">Wi-Fi</string>
+    <string name="process_kernel_label">Android OS</string>
+    <string name="process_mediaserver_label">媒体服务器</string>
+    <string name="ranking_list">24小时耗电排行榜</string>
+    <string name="refresh_cpu">cpu</string>
+    <string name="refresh_normal">normal</string>
+    <string name="specialty_tab_name">高级</string>
+    <string name="tb_munion_tip_download_prefix">正在下载:</string>
+    <string name="temperature_status">温度状态：</string>
+    <string name="umeng_common_icon">icon</string>
+    <string name="wiwi_on_or_off">Wifi开关</string>
+</resources>

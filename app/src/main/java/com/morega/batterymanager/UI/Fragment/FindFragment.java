@@ -1,12 +1,12 @@
 package com.morega.batterymanager.UI.Fragment;
 
+import com.morega.batterymanager.R;
+import com.umeng.analytics.MobclickAgent;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.morega.batterymanager.R;
-import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -20,7 +20,7 @@ public class FindFragment extends BaseFragment {
 
     }
 
-    public static final FindFragment getInstance(){
+    public static FindFragment getInstance(){
         return FragmentHolder.INSTANCE;
     }
 

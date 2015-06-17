@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.morega.batterymanager" >
+    package="com.morega.batterymanager"
+    >
 
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -24,10 +25,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <!--<service-->
-            <!--android:name="com.umeng.update.net.DownloadingService"-->
-            <!--android:process=":DownloadingService" >-->
-        <!--</service>-->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
         <activity
             android:name="com.morega.batterymanager.UI.MainActivity"
             android:label="@string/app_name"
@@ -44,10 +45,12 @@
             android:theme="@android:style/Theme.NoTitleBar">
 
         </activity>
-        <!--<activity-->
-            <!--android:name="com.umeng.update.UpdateDialogActivity"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" >-->
-        <!--</activity>-->
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.umeng.fb.ConversationActivity"/>
         <!--<receiver-->
             <!--android:name=".Utils.BatteryBroadCastReceiver"-->
             <!--android:exported="false">-->

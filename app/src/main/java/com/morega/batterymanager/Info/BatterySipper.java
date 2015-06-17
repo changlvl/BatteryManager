@@ -133,7 +133,7 @@ public class BatterySipper implements Comparable<BatterySipper> {
             icon = appInfo.loadIcon(pm);// pm.getApplicationIcon(appInfo);
             name = appInfo.loadLabel(pm).toString();
             packageName = pkgName;
-            if ((appInfo.flags & appInfo.FLAG_SYSTEM) > 0 && appInfo.uid < 10000){
+            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0 && appInfo.uid < 10000){
                 systemType = SystemType.SYSTEM;
             }else {
                 systemType = SystemType.APP;

@@ -17,11 +17,11 @@ public class LevelProgressView extends View{
     //分段颜色
     private static final int[] SECTION_COLORS = {Color.RED,Color.YELLOW,Color.GREEN};
     //进度条最大值
-    private float maxCount;
+    private float maxCount = 100;
     //进度条当前值
     private float currentCount;
     //画笔
-    private Paint mPaint;
+    protected Paint mPaint;
     private int mWidth = 200,mHeight = 100;
 
     public LevelProgressView(Context context, AttributeSet attrs, int defStyleAttr){
@@ -91,14 +91,12 @@ public class LevelProgressView extends View{
     }
     /***
      * 设置最大的进度值
-     * @param maxCount
      */
     public void setMaxCount(float maxCount) {
         this.maxCount = maxCount;
     }
     /***
      * 设置当前的进度值
-     * @param currentCount
      */
     public void setCurrentCount(float currentCount) {
         this.currentCount = currentCount;

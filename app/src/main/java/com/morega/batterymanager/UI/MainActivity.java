@@ -8,10 +8,12 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-import com.morega.batterymanager.R;
 import com.morega.batterymanager.Adapter.MyViewPagerAdapter;
+import com.morega.batterymanager.R;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import butterknife.ButterKnife;
 
@@ -26,7 +28,8 @@ public class MainActivity extends BaseActivity {
 //    //电池容量
 //    private double volume = 1500;
 //    private int level1 = 0;
-
+    FeedbackAgent fb;
+    private static final String TAG = MainActivity.class.getName();
     private long exitTime = 0;
     private MyViewPagerAdapter myViewPagerAdapter;
     public static MainActivity mainActivity;
@@ -34,7 +37,7 @@ public class MainActivity extends BaseActivity {
     private ActionBar actionBar;
     private ViewPager mViewPager;
     ActionBar.TabListener mTabListener;
-    private ActionBar.Tab mBatteryStatusTab;
+    protected ActionBar.Tab mBatteryStatusTab;
 
 
 //    public void onArticleSelected(){
@@ -52,8 +55,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         super.onCreate(savedInstanceState);
-//        UmengUpdateAgent.setUpdateOnlyWifi(false);
-//        UmengUpdateAgent.update(this);
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
+
         MobclickAgent.updateOnlineConfig(MainActivity.this);
         AnalyticsConfig.enableEncrypt(false);
         myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),

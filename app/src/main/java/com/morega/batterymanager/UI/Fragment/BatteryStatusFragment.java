@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,6 +24,7 @@ import com.morega.batterymanager.UI.ShowNotifyStatus;
 import com.morega.batterymanager.UI.View.LevelProgressView;
 import com.morega.batterymanager.Utils.ComputeForVolume;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
 
 import java.util.Calendar;
 
@@ -65,7 +68,7 @@ public class BatteryStatusFragment extends BaseFragment {
     private int time1 = 0;
     //用于记录电量显示的变化
     private int level1 = 0;
-    BroadcastReceiver batteryChangedReceiver;
+    private BroadcastReceiver batteryChangedReceiver;
     @InjectView(R.id.level) TextView levelView;
     @InjectView(R.id.battery_status_level) ImageView batteryStatusLevel;
     @InjectView(R.id.battery_status_temperature) TextView batteryStatusTemperature;
@@ -89,7 +92,7 @@ public class BatteryStatusFragment extends BaseFragment {
 
     }
 
-    public static final BatteryStatusFragment getInstance(){
+    public static BatteryStatusFragment getInstance(){
         return FragmentHolder.INSTANCE;
     }
 
@@ -156,6 +159,16 @@ public class BatteryStatusFragment extends BaseFragment {
                 setRemainTime(intent);
                 System.out.print("volumeflag_out:" + volumeflag_out);
                 setLevel(intent);
+                int version = getVersionCode(getActivity());
+                statusFromRemainLevel.setText(String.valueOf(version));
+                statusFromRemainLevel.setTextSize(30);
+                statusFromRemainLevel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FeedbackAgent agent = new FeedbackAgent(getActivity());
+                        agent.startFeedbackActivity();
+                    }
+                });
                 ShowNotifyStatus.showNotifyStatus(getActivity(), intent);
 
 
@@ -356,5 +369,17 @@ public class BatteryStatusFragment extends BaseFragment {
         int hour = (int)time/60/60;
         int minute = (int)(time-hour*60*60)/60;
         remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
+    }
+
+    public static int getVersionCode(Context context)//获取版本号(内部识别号)
+    {
+        try {
+            PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pi.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

@@ -40,9 +40,9 @@ public class BatteryInfo {
     private PowerProfile mPowerProfile;
     private static BatteryStatsImpl mStats;
 
-    private double mMinPercentOfTotal = 0;
+    private double mMinPercentOfTotal = 0.01;
     private long mStatsPeriod = 0;
-    public double mMaxPower = 1;
+    private double mMaxPower = 1;
     private double mTotalPower;
     private double mWifiPower;
     private double mBluetoothPower;
@@ -53,30 +53,19 @@ public class BatteryInfo {
     private final List<BatterySipper> mWifiSippers = new ArrayList<BatterySipper>();
     private final List<BatterySipper> mBluetoothSippers = new ArrayList<BatterySipper>();
     private Context mContext;
-    public int testType;
 
     public enum DrainType {
-        IDLE, CELL, PHONE, WIFI, BLUETOOTH, SCREEN, APP, KERNEL, MEDIASERVER;
+        IDLE, CELL, PHONE, WIFI, BLUETOOTH, SCREEN, APP, KERNEL, MEDIASERVER
     }
 
     public enum SystemType{
-        SYSTEM,APP;
+        SYSTEM,APP
     }
 
     public BatteryInfo(Context context) {
-        testType = 1;
         mContext = context;
         mBatteryInfo = IBatteryStats.Stub.asInterface(ServiceManager.getService("batterystats"));
         mPowerProfile = new PowerProfile(context);
-    }
-
-    /**
-     * ������С�ٷֱȣ�С�ڸ�ֵ�ĳ��򽫱����˵�
-     *
-     * @param minPercentOfTotal
-     */
-    public void setMinPercentOfTotal(double minPercentOfTotal) {
-        this.mMinPercentOfTotal = minPercentOfTotal;
     }
 
     /**
@@ -98,9 +87,9 @@ public class BatteryInfo {
     }
 
     public List<BatterySipper> getBatteryStats() {
-        if (mStats == null) {
-            mStats = load();
-        }
+//        if (mStats == null) {
+//            mStats = load();
+//        }
 
         if (mStats == null) {
             return getAppListCpuTime();
@@ -193,7 +182,6 @@ public class BatteryInfo {
 
     private List<BatterySipper> getAppListCpuTime() {
         BatterySipper android = null;
-        testType = 2;
         final List<BatterySipper> list = new ArrayList<BatterySipper>();
 
         long totalTime = 0;
@@ -276,9 +264,8 @@ public class BatteryInfo {
         final int which = mStatsType;
         long uSecTime = SystemClock.elapsedRealtime() * 1000;
         final long uSecNow = mStats.computeBatteryRealtime(uSecTime, which);
-        final long timeSinceUnplugged = uSecNow;
         if (DEBUG) {
-            Log.i(TAG, "Uptime since last unplugged = " + (timeSinceUnplugged / 1000));
+            Log.i(TAG, "Uptime since last unplugged = " + (uSecNow / 1000));
         }
 
         addPhoneUsage(uSecNow);
@@ -456,7 +443,7 @@ public class BatteryInfo {
                 }
             }
             if (cpuFgTime > cpuTime) {
-                if (DEBUG && cpuFgTime > cpuTime + 10000) {
+                if (cpuFgTime > cpuTime + 10000) {
                     Log.i(TAG, "WARNING! Cputime is more than 10 seconds behind Foreground time");
                 }
                 cpuTime = cpuFgTime; // Statistics may not have been gathered yet.

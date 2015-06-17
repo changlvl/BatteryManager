@@ -11,7 +11,7 @@ import com.morega.batterymanager.UI.MainActivity;
  */
 public class BatteryBroadCastReceiver extends BroadcastReceiver{
 
-    MainActivity mainActivity;
+    private MainActivity mainActivity;
 
     public BatteryBroadCastReceiver(MainActivity activity){
         this.mainActivity = activity;

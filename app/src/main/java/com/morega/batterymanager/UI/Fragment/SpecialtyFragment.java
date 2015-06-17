@@ -17,6 +17,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     private ArrayList<AnimationDrawable> animList;
     private boolean hasWrong = true;
     private int wrong = (int)(Math.random() * 10);
+
     @InjectView(R.id.location_button) Button locationButton;
     @InjectView(R.id.wifi_button) Button wifiButton;
     @InjectView(R.id.data_button) Button dataButton;
@@ -68,24 +70,75 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     @InjectView(R.id.repair_9) ImageView repair9;
     @InjectView(R.id.repair_10) ImageView repair10;
     @InjectView(R.id.start_repair_button) Button startRepairButton;
-    // Container Activity must implement this interface
-//    public interface OnHeadlineSelectedListener{
-//        public void onArticleSelected();
-//    }
 
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        // This makes sure that the container activity has implemented
-//        // the callback interface. If not, it throws an exception
-//        try {
-//            mCallback = (OnHeadlineSelectedListener) activity;
-//        }catch (ClassCastException e){
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnHeadlineSelectedListener");
-//        }
-//    }
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case 1:
+                    initAnim();
+                    break;
+                case 2:
+                    startRepairButton.setText("修复");
+                    startRepairButton.setClickable(true);
+                    break;
+                case 3:
+                    initAnim();
+                    Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
+                    break;
+                case 4:
+                    startRepairButton.setClickable(false);
+                    AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
+                    successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
+                    successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            initAnim();
+                        }
+                    });
+                    successBuilder.create().show();
+                    break;
+                case 5:
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("您的电池存在一些小问题，修复成功后将提高电池的续航能力");
+                    builder.setTitle("提示");
+                    builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            mHandler.sendEmptyMessage(2);
+                        }
+                    });
+                    builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startRepairButton.setText("正在努力修复");
+                            startRepairButton.setClickable(false);
+                            dialog.dismiss();
+                            list.get(wrong).setBackgroundResource(R.drawable.drawable_anim_repair);
+                            AnimationDrawable anim = (AnimationDrawable) list.get(wrong).getBackground();
+                            anim.stop();
+                            anim.start();
+                            new Thread(){
+                                @Override
+                                public void run(){
+                                    try {
+                                        Thread.currentThread().sleep(7000);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                    mHandler.sendEmptyMessage(4);
+                                }
+                            }.start();
+                        }
+                    });
 
+                    builder.create().show();
+                    hasWrong = false;
+            }
+        }
+    };
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()){
@@ -96,7 +149,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                 break;
             case R.id.data_button:
-                if (Build.VERSION.SDK_INT>=21){
+                if (Build.VERSION.SDK_INT >= 21) {
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(
                             "com.android.settings",
@@ -193,10 +246,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 }
                 break;
             case R.id.more_power_saving_button:
-//                RankingListFragment fragment = new RankingListFragment();;
-//                android.support.v4.app.FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//                transaction.add(R.id.id_content,fragment).commit();
-//                mCallback.onArticleSelected();
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), RankingListActivity.class);
                 startActivity(intent);
@@ -209,7 +258,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
 
     }
 
-    public static final SpecialtyFragment getInstance(){
+    public static SpecialtyFragment getInstance(){
         return FragmentHolder.INSTANCE;
     }
 
@@ -286,25 +335,22 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
             public void onClick(View v) {
                 if (startRepairButton.getText().equals("修复")){
                     startRepairButton.setText("正在努力修复");
+                    startRepairButton.setClickable(false);
                     list.get(wrong).setBackgroundResource(R.drawable.drawable_anim_repair);
                     AnimationDrawable anim = (AnimationDrawable) list.get(wrong).getBackground();
                     anim.stop();
                     anim.start();
-                    new Handler().postDelayed(new Runnable() {
+                    new Thread(){
                         @Override
-                        public void run() {
-                            AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
-                            successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
-                            successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    initAnim();
-                                }
-                            });
-                            successBuilder.create().show();
+                        public void run(){
+                            try {
+                                Thread.currentThread().sleep(7000);
+                                mHandler.sendEmptyMessage(4);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
-                    }, 7000);
+                    }.start();
                 }
                 else{
                     startRepairButton.setClickable(false);
@@ -330,62 +376,30 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                         }
                         if (hasWrong) {
                             final int i = wrong;
-                            new Handler().postDelayed(new Runnable() {
+                            new Thread(){
                                 @Override
-                                public void run() {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                    builder.setMessage("您的电池存在一些小问题，修复成功后将提高电池的续航能力");
-                                    builder.setTitle("提示");
-                                    builder.setNegativeButton("算了", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            startRepairButton.setText("修复");
-                                            startRepairButton.setClickable(true);
-                                        }
-                                    });
-                                    builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            startRepairButton.setText("正在努力修复");
-                                            dialog.dismiss();
-                                            list.get(i).setBackgroundResource(R.drawable.drawable_anim_repair);
-                                            AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
-                                            anim.stop();
-                                            anim.start();
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
-                                                    successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
-                                                    successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            dialog.dismiss();
-                                                            initAnim();
-                                                        }
-                                                    });
-                                                    successBuilder.create().show();
-                                                }
-                                            }, 7000);
-                                        }
-                                    });
-
-                                    builder.create().show();
-                                    hasWrong = false;
+                                public void run(){
+                                    try {
+                                        Thread.currentThread().sleep(20000);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                    mHandler.sendEmptyMessage(5);
                                 }
-                            }, 20000);
+                            }.start();
                         } else {
-                            new Handler().postDelayed(new Runnable() {
+                            new Thread(){
                                 @Override
-                                public void run() {
-                                    Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
-                                    initAnim();
+                                public void run(){
+                                    try {
+                                        Thread.currentThread().sleep(20000);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+                                    mHandler.sendEmptyMessage(3);
                                 }
-
-                            }, 20000);
-
-
+                            }.start();
                         }
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -490,7 +504,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         if (mBluetoothAdapter == null) {
             Toast.makeText(context, "本机没有找到蓝牙硬件或驱动！", Toast.LENGTH_SHORT).show();
         }
-
         return mBluetoothAdapter.isEnabled();
     }
 
@@ -531,16 +544,12 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkINfo = cm.getActiveNetworkInfo();
-        if (networkINfo != null
-                && networkINfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-            return true;
-        }
-        return false;
+        return networkINfo != null
+            && networkINfo.getType() == ConnectivityManager.TYPE_MOBILE;
     }
 
     /**
      * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
-     * @param context
      * @return true 表示开启
      */
     public static  boolean GPSisOPen( Context context) {
@@ -550,18 +559,14 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
         boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if (gps || network) {
-            return true;
-        }
+        return gps || network;
 
-        return false;
     }
 
     /**
      * 强制帮用户打开GPS
-     * @param context
      */
-    public static final void openGPS(Context context) {
+    public static void openGPS(Context context) {
         if (Build.VERSION.SDK_INT>=21){
             context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }

@@ -16,11 +16,11 @@ public abstract class BaseActivity extends FragmentActivity{
         initListeners();
     }
 //    初始化界面
-    public abstract void initViews();
+    protected abstract void initViews();
 
 //    初始化数据
-    public abstract void initData();
+    protected abstract void initData();
 
 //    初始化监听器
-    public abstract void initListeners();
+    protected abstract void initListeners();
 }
