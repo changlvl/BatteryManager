@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.morega.batterymanager.R;
+import com.morega.batterymanager.Utils.Touchable;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Method;
@@ -189,6 +190,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                         }
                     });
                     successBuilder.create().show();
+                    Touchable.setTouchable(true);
                     break;
                 case 5:
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -204,10 +206,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                     builder.setPositiveButton("修复", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Touchable.setTouchable(false);
                             startRepairButton.setText("正在努力修复");
                             startRepairButton.setClickable(false);
                             dialog.dismiss();
-                            for (int i = 0;i<wrongNum;i++){
+                            for (int i = 0; i < wrongNum; i++) {
                                 list.get(wrongs[i]).setBackgroundResource(R.drawable.drawable_anim_repair);
                                 AnimationDrawable anim = (AnimationDrawable) list.get(wrongs[i]).getBackground();
                                 repairList.add(anim);
@@ -229,12 +232,12 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                                 timer.schedule(task, repairTime);
                                 repairTime += 7000;
                             }
-                            new Thread(){
+                            new Thread() {
                                 @Override
-                                public void run(){
+                                public void run() {
                                     try {
-                                        Thread.currentThread().sleep(7000*wrongNum);
-                                    }catch (Exception e){
+                                        Thread.currentThread().sleep(7000 * wrongNum);
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     mHandler.sendEmptyMessage(4);
@@ -245,6 +248,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
 
                     builder.create().show();
                     hasWrong = false;
+                    Touchable.setTouchable(true);
                     break;
             }
         }
@@ -488,7 +492,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         list.add(repair99);
         list.add(repair100);
 
-        registeAnim();
+        registeAnim(container);
 
 
         return view;
@@ -535,9 +539,9 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         super.onStart();
         init();
     }
-    //注册动画
-    private void registeAnim(){
 
+    //注册动画
+    private void registeAnim(final ViewGroup container){
         for (int i=0;i<100;i++){
             if (compareWithWrong(i)){
                 list.get(i).setBackgroundResource(R.drawable.drawable_anim_wrong);
@@ -550,9 +554,12 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         startRepairButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Touchable.setTouchable(false);
                 if (startRepairButton.getText().equals("修复")) {
+                    Touchable.setTouchable(false);
                     startRepairButton.setText("正在努力修复");
                     startRepairButton.setClickable(false);
+
                     for (int i = 0; i < wrongNum; i++) {
                         list.get(wrongs[i]).setBackgroundResource(R.drawable.drawable_anim_repair);
                         AnimationDrawable anim = (AnimationDrawable) list.get(wrongs[i]).getBackground();
@@ -615,6 +622,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                                 public void run() {
                                     try {
                                         Thread.currentThread().sleep(200000);
+                                        Touchable.setTouchable(true);
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -627,6 +635,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                                 public void run() {
                                     try {
                                         Thread.currentThread().sleep(200000);
+                                        Touchable.setTouchable(true);
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -645,6 +654,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                             }
                         });
                         builder.create().show();
+                        Touchable.setTouchable(true);
                     }
                 }
             }

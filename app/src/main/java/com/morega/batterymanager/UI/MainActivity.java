@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.morega.batterymanager.Adapter.MyViewPagerAdapter;
 import com.morega.batterymanager.R;
+import com.morega.batterymanager.Utils.Touchable;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
@@ -30,6 +32,7 @@ public class MainActivity extends BaseActivity {
 //    //电池容量
 //    private double volume = 1500;
 //    private int level1 = 0;
+    public boolean toughable = true;
     FeedbackAgent fb;
     private static final String TAG = MainActivity.class.getName();
     private long exitTime = 0;
@@ -53,6 +56,15 @@ public class MainActivity extends BaseActivity {
 //        transaction.addToBackStack(null);
 //        transaction.commit();
 //    }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (!Touchable.isTouchable()){
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
