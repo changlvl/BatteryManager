@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.morega.batterymanager.R;
-import com.morega.batterymanager.UI.RankingListActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Method;
@@ -58,7 +57,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     @InjectView(R.id.data_button) Button dataButton;
     @InjectView(R.id.bluetooth_button) Button bluetoothButton;
     @InjectView(R.id.heatpoint_button) Button heatpointButton;
-    @InjectView(R.id.more_power_saving_button) Button morePowerSavingButton;
     @InjectView(R.id.repair_1) ImageView repair1;
     @InjectView(R.id.repair_2) ImageView repair2;
     @InjectView(R.id.repair_3) ImageView repair3;
@@ -165,11 +163,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
             case R.id.heatpoint_button:
                 startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
                 break;
-            case R.id.more_power_saving_button:
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), RankingListActivity.class);
-                startActivity(intent);
-                break;
         }
 
         return false;
@@ -245,11 +238,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                     init();
                 }
                 break;
-            case R.id.more_power_saving_button:
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), RankingListActivity.class);
-                startActivity(intent);
-                break;
         }
     }
 
@@ -283,8 +271,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         bluetoothButton.setOnLongClickListener(this);
         heatpointButton.setOnClickListener(this);
         heatpointButton.setOnLongClickListener(this);
-        morePowerSavingButton.setOnClickListener(this);
-        morePowerSavingButton.setOnLongClickListener(this);
         list = new ArrayList<>();
         animList = new ArrayList<>();
         list.add(repair1);

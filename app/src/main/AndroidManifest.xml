@@ -41,11 +41,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.morega.batterymanager.UI.RankingListActivity"
-            android:theme="@android:style/Theme.NoTitleBar">
-
-        </activity>
-        <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
