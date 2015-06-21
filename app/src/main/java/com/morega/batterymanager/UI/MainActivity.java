@@ -3,7 +3,9 @@ package com.morega.batterymanager.UI;
 import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ public class MainActivity extends BaseActivity {
     private ViewPager mViewPager;
     ActionBar.TabListener mTabListener;
     protected ActionBar.Tab mBatteryStatusTab;
+    PowerManager powerManager = null;
+    PowerManager.WakeLock wakeLock = null;
 
 
 //    public void onArticleSelected(){
@@ -65,6 +69,8 @@ public class MainActivity extends BaseActivity {
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mViewPager.setAdapter(myViewPagerAdapter);
 
+        this.powerManager = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
+        this.wakeLock = this.powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
     }
 
     @Override
@@ -81,7 +87,7 @@ public class MainActivity extends BaseActivity {
 
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setDisplayOptions(0,ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
 
@@ -145,6 +151,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        this.wakeLock.acquire();
         MobclickAgent.onResume(this);//统计时长
         MobclickAgent.onPageStart("SplashScreen");//统计页面(仅有Activity的应用中SDK自动调用，不需要单独写)
     }
@@ -157,6 +164,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        this.wakeLock.release();
         //this.finish();
         MobclickAgent.onPageEnd("SplashScreen");// （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause
         // 之前调用,因为 onPause 中会保存信息
