@@ -253,15 +253,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    private static class FragmentHolder{
-        private static final SpecialtyFragment INSTANCE = new SpecialtyFragment();
-
-    }
-
-    public static SpecialtyFragment getInstance(){
-        return FragmentHolder.INSTANCE;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
