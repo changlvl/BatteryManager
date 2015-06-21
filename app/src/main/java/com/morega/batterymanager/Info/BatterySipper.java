@@ -130,9 +130,13 @@ public class BatterySipper implements Comparable<BatterySipper> {
         PackageManager pm = mContext.getPackageManager();
         try {
             ApplicationInfo appInfo = pm.getApplicationInfo(pkgName, 0);
+            //获得应用的小图标
             icon = appInfo.loadIcon(pm);// pm.getApplicationIcon(appInfo);
+            //获得应用的名称
             name = appInfo.loadLabel(pm).toString();
+            //获得包名，包名用于识别应用
             packageName = pkgName;
+            //区分系统应用和安装APP
             if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0 && appInfo.uid < 10000){
                 systemType = SystemType.SYSTEM;
             }else {

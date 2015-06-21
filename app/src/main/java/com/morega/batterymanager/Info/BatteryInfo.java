@@ -92,6 +92,7 @@ public class BatteryInfo {
 //        }
 
         if (mStats == null) {
+            //入口，获取所有APP的CPU占用时间
             return getAppListCpuTime();
         }
 
@@ -181,34 +182,38 @@ public class BatteryInfo {
     }
 
     private List<BatterySipper> getAppListCpuTime() {
+        //BatterySipper 代表一个应用
         BatterySipper android = null;
+        //存放所有应用信息的list，信息包括 名称，包名，图标，CPU占用时间
         final List<BatterySipper> list = new ArrayList<BatterySipper>();
-
+        //所有应用占用CPU时间的总和，用于计算百分比
         long totalTime = 0;
+        //从ActivityManager中获取各个应用的情况
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
-
-        HashMap<String, BatterySipper> templist = new HashMap<String, BatterySipper>();
+        //临时存放APP信息的哈希表，对应包名和应用
+        HashMap<String, BatterySipper> tempList = new HashMap<>();
+        //把应用存进tempList，在循环中进行某些应用分支的合并，计算该应用的总CPU占用时间
         for (RunningAppProcessInfo info : runningApps) {
             final long time = getAppProcessTime(info.pid);
             String[] pkgNames = info.pkgList;
             if (pkgNames == null) {
-                if (templist.containsKey(info.processName)) {
-                    BatterySipper sipper = templist.get(info.processName);
+                if (tempList.containsKey(info.processName)) {
+                    BatterySipper sipper = tempList.get(info.processName);
                     sipper.setValue(sipper.getValue() + time);
 
                 } else {
-                    templist.put(info.processName, new BatterySipper(mContext, info.processName, time));
+                    tempList.put(info.processName, new BatterySipper(mContext, info.processName, time));
                 }
                 totalTime += time;
             } else {
                 for (String pkgName : pkgNames) {
-                    if (templist.containsKey(pkgName)) {
-                        BatterySipper sipper = templist.get(pkgName);
+                    if (tempList.containsKey(pkgName)) {
+                        BatterySipper sipper = tempList.get(pkgName);
                         sipper.setValue(sipper.getValue() + time);
                         sipper.setPackageName(pkgName);
                     } else {
-                        templist.put(pkgName, new BatterySipper(mContext, pkgName, time));
+                        tempList.put(pkgName, new BatterySipper(mContext, pkgName, time));
 
                     }
                     totalTime += time;
@@ -216,14 +221,16 @@ public class BatteryInfo {
             }
         }
 
-        if (totalTime == 0) totalTime = 1;
-        list.addAll(templist.values());
+        //把 tempList 存进 list
+        list.addAll(tempList.values());
+        //找到包名为 android 的应用，这个应用应该是一直占用CPU的
         for (int i = list.size() - 1; i >= 0; i--){
             BatterySipper sipper = list.get(i);
             if (sipper.getPackageName().equals("android")){
                 android = sipper;
             }
         }
+        //把其它的一直占用CPU的系统小应用和 android 合并
         for (int i = list.size() - 1; i >= 0; i--){
             BatterySipper sipper = list.get(i);
             if (sipper.getValue()==android.getValue()&&!sipper.getPackageName().equals("android")){
@@ -231,7 +238,7 @@ public class BatteryInfo {
                 totalTime -= sipper.getValue();
             }
         }
-
+        //在list 中计算各个应用占用CPU的百分比，去掉一些微小到可以忽略不计的应用
         for (int i = list.size() - 1; i >= 0; i--) {
             BatterySipper sipper = list.get(i);
             double percentOfTotal = sipper.getValue() * 100 / totalTime;
@@ -241,7 +248,7 @@ public class BatteryInfo {
                 sipper.setPercent(percentOfTotal);
             }
         }
-
+        //对list进行排序，结果从大到小
         Collections.sort(list, new Comparator<BatterySipper>() {
             @Override
             public int compare(BatterySipper object1, BatterySipper object2) {

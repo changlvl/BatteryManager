@@ -25,7 +25,7 @@ public class ShowNotifyStatus {
         RemoteViews mRemoteViews = new RemoteViews(context.getPackageName(), R.layout.status_notify);
         if (status== BatteryManager.BATTERY_STATUS_CHARGING){
             mRemoteViews.setTextViewText(R.id.notify_status, "充电进行中");
-            mRemoteViews.setTextViewText(R.id.notify_advice, "请暂时不要使用手机，提升充电效率和降低温度");
+            mRemoteViews.setTextViewText(R.id.notify_advice, "请暂时停用手机，提升充电效率和降低温度");
         }else if (status == BatteryManager.BATTERY_STATUS_FULL){
             mRemoteViews.setTextViewText(R.id.notify_status, "电池已充满");
             mRemoteViews.setTextViewText(R.id.notify_advice, "请拔掉充电器节约能源和保护电池");
@@ -48,6 +48,7 @@ public class ShowNotifyStatus {
         if (temperature>40){
             mRemoteViews.setTextViewText(R.id.notify_status, "警告！！温度过高！！");
             mRemoteViews.setTextViewText(R.id.notify_advice, "这样用手机很容易爆炸噢！！");
+            //TODO  音效
         }
 
         mRemoteViews.setImageViewResource(R.id.notify_temperature, R.drawable.abc_btn_radio_to_on_mtrl_015);

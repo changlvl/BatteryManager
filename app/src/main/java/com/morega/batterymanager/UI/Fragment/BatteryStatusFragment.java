@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,7 +22,6 @@ import com.morega.batterymanager.UI.ShowNotifyStatus;
 import com.morega.batterymanager.UI.View.LevelProgressView;
 import com.morega.batterymanager.Utils.ComputeForVolume;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.fb.FeedbackAgent;
 
 import java.util.Calendar;
 
@@ -86,15 +83,6 @@ public class BatteryStatusFragment extends BaseFragment {
     public BatteryStatusFragment(){
 
     }
-    //�����һ�û������
-    private static class FragmentHolder{
-        private static final BatteryStatusFragment INSTANCE = new BatteryStatusFragment();
-
-    }
-
-    public static BatteryStatusFragment getInstance(){
-        return FragmentHolder.INSTANCE;
-    }
 
     @Override
     public void onResume() {
@@ -138,6 +126,7 @@ public class BatteryStatusFragment extends BaseFragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String BatteryAction = intent.getAction();
+                //获取电池的基本信息
                 if (BatteryAction.equals(Intent.ACTION_BATTERY_CHANGED)) {
                     status = intent.getIntExtra("status",0);
                     health = intent.getIntExtra("health",0);
@@ -149,48 +138,59 @@ public class BatteryStatusFragment extends BaseFragment {
                     technology = intent.getStringExtra("technology");
 
                 }
+                //显示电池健康情况
                 setHealth();
+                //显示电池充放电状态
                 setStatus();
+                //显示电池温度
                 setTemperature();
+                //显示当前电池电压
                 batteryVoltage.setText(String.valueOf((double) voltage / 1000) + "V");
+                //显示电池技术
                 batteryTechnology.setText(technology);
+                //显示手机型号
                 String type = Build.MODEL +" (Android " + Build.VERSION.RELEASE + ")";
                 phoneType.setText(type);
+                //显示可待机时间
                 setRemainTime(intent);
-                System.out.print("volumeflag_out:" + volumeflag_out);
+                //显示电量百分比，以图片形式
                 setLevel(intent);
-                int version = getVersionCode(getActivity());
-                statusFromRemainLevel.setText(String.valueOf(version));
-                statusFromRemainLevel.setTextSize(30);
-                statusFromRemainLevel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FeedbackAgent agent = new FeedbackAgent(getActivity());
-                        agent.startFeedbackActivity();
-                    }
-                });
+                //TODO 应该显示的是当前状态的提示语，这里现在是版本号获取和用户反馈，之后用户反馈要移到别的地方
+//                int version = getVersionCode(getActivity());
+//                statusFromRemainLevel.setText(String.valueOf(version));
+//                statusFromRemainLevel.setTextSize(30);
+//                statusFromRemainLevel.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        FeedbackAgent agent = new FeedbackAgent(getActivity());
+//                        agent.startFeedbackActivity();
+//                    }
+//                });
+                //显示状态栏
                 ShowNotifyStatus.showNotifyStatus(getActivity(), intent);
-
-
             }
         };
+        //注册广播
         getActivity().registerReceiver(batteryChangedReceiver, intentFilter);
-
-
-
-
         return view;
     }
 
     private void setLevel(Intent intent){
+        //画图，自定义进度条
         LevelProgressView progressView = new LevelProgressView(getActivity());
+        //设置当前电量值
         progressView.setCurrentCount(ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
+        //设置最大值
         progressView.setMaxCount(100);
+        //切成bitmap，切圆角
         Bitmap bitmap = Bitmap.createBitmap(250, 100, Bitmap.Config.ARGB_4444);
         progressView.draw(new Canvas(bitmap));
+        //把bitmap放到控件中
         batteryStatusLevel.setImageBitmap(bitmap);
+        //在图下面用文字显示电量
         levelView.setText("当前电量：" + ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) + "%");
     }
+    //根据温度显示不同温度色块
     private void setTemperature(){
         temperatureStatus.setText(String.valueOf((double) temperature / 10) + "\u2103");
         batteryStatusTemperature.setText(String.valueOf((double) temperature / 10) + "\u2103");
@@ -233,12 +233,27 @@ public class BatteryStatusFragment extends BaseFragment {
         switch (status){
             case BatteryManager.BATTERY_STATUS_DISCHARGING:
                 sstatus = "放电中";
+                if (level<=20){
+                    statusFromRemainLevel.setText("电池电量不足,这样下去很快要自动关机了噢");
+                }else if (level>=60){
+                    statusFromRemainLevel.setText("充电充得饱饱的，情况一切正常");
+                }else {
+                    statusFromRemainLevel.setText("人在江湖跑，电量总不饱");
+                }
                 break;
             case BatteryManager.BATTERY_STATUS_FULL:
                 sstatus = "已充满";
+                statusFromRemainLevel.setText("请拔掉充电器节约能源和保护电池");
                 break;
             case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
                 sstatus = "未充电";
+                if (level<=20){
+                    statusFromRemainLevel.setText("电池电量不足,这样下去很快要自动关机了噢");
+                }else if (level>=60){
+                    statusFromRemainLevel.setText("充电充得饱饱的，情况一切正常");
+                }else {
+                    statusFromRemainLevel.setText("人在江湖跑，电量总不饱");
+                }
                 break;
             case BatteryManager.BATTERY_STATUS_UNKNOWN:
                 sstatus = "未知";
@@ -256,6 +271,7 @@ public class BatteryStatusFragment extends BaseFragment {
                         sstatus += "无线充电";
                         break;
                 }
+                statusFromRemainLevel.setText("请暂时停用手机，提升充电效率和降低温度");
                 break;
         }
         connectStatus.setText(sstatus);
@@ -371,15 +387,15 @@ public class BatteryStatusFragment extends BaseFragment {
         remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
     }
 
-    public static int getVersionCode(Context context)//获取版本号(内部识别号)
-    {
-        try {
-            PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return pi.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return 0;
-        }
-    }
+//    public static int getVersionCode(Context context)//获取版本号(内部识别号)
+//    {
+//        try {
+//            PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+//            return pi.versionCode;
+//        } catch (PackageManager.NameNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return 0;
+//        }
+//    }
 }
