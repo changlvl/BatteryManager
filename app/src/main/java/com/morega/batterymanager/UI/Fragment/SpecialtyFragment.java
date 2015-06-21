@@ -49,9 +49,12 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     private boolean heatpointTag = false;
     private ArrayList<ImageView> list;
     private ArrayList<AnimationDrawable> animList;
+    private ArrayList<AnimationDrawable> repairList;
     private boolean hasWrong = true;
-    private int wrong = (int)(Math.random() * 10);
-
+    private int wrong;
+    private int wrongNum = (int)(Math.random() *15+1);
+    private int wrongs[] = new int[wrongNum];
+    private double repairNum = (double)wrongNum*4/15;
     @InjectView(R.id.location_button) Button locationButton;
     @InjectView(R.id.wifi_button) Button wifiButton;
     @InjectView(R.id.data_button) Button dataButton;
@@ -67,6 +70,96 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     @InjectView(R.id.repair_8) ImageView repair8;
     @InjectView(R.id.repair_9) ImageView repair9;
     @InjectView(R.id.repair_10) ImageView repair10;
+    @InjectView(R.id.repair_11) ImageView repair11;
+    @InjectView(R.id.repair_12) ImageView repair12;
+    @InjectView(R.id.repair_13) ImageView repair13;
+    @InjectView(R.id.repair_14) ImageView repair14;
+    @InjectView(R.id.repair_15) ImageView repair15;
+    @InjectView(R.id.repair_16) ImageView repair16;
+    @InjectView(R.id.repair_17) ImageView repair17;
+    @InjectView(R.id.repair_18) ImageView repair18;
+    @InjectView(R.id.repair_19) ImageView repair19;
+    @InjectView(R.id.repair_20) ImageView repair20;
+    @InjectView(R.id.repair_21) ImageView repair21;
+    @InjectView(R.id.repair_22) ImageView repair22;
+    @InjectView(R.id.repair_23) ImageView repair23;
+    @InjectView(R.id.repair_24) ImageView repair24;
+    @InjectView(R.id.repair_25) ImageView repair25;
+    @InjectView(R.id.repair_26) ImageView repair26;
+    @InjectView(R.id.repair_27) ImageView repair27;
+    @InjectView(R.id.repair_28) ImageView repair28;
+    @InjectView(R.id.repair_29) ImageView repair29;
+    @InjectView(R.id.repair_30) ImageView repair30;
+    @InjectView(R.id.repair_31) ImageView repair31;
+    @InjectView(R.id.repair_32) ImageView repair32;
+    @InjectView(R.id.repair_33) ImageView repair33;
+    @InjectView(R.id.repair_34) ImageView repair34;
+    @InjectView(R.id.repair_35) ImageView repair35;
+    @InjectView(R.id.repair_36) ImageView repair36;
+    @InjectView(R.id.repair_37) ImageView repair37;
+    @InjectView(R.id.repair_38) ImageView repair38;
+    @InjectView(R.id.repair_39) ImageView repair39;
+    @InjectView(R.id.repair_40) ImageView repair40;
+    @InjectView(R.id.repair_41) ImageView repair41;
+    @InjectView(R.id.repair_42) ImageView repair42;
+    @InjectView(R.id.repair_43) ImageView repair43;
+    @InjectView(R.id.repair_44) ImageView repair44;
+    @InjectView(R.id.repair_45) ImageView repair45;
+    @InjectView(R.id.repair_46) ImageView repair46;
+    @InjectView(R.id.repair_47) ImageView repair47;
+    @InjectView(R.id.repair_48) ImageView repair48;
+    @InjectView(R.id.repair_49) ImageView repair49;
+    @InjectView(R.id.repair_50) ImageView repair50;
+    @InjectView(R.id.repair_51) ImageView repair51;
+    @InjectView(R.id.repair_52) ImageView repair52;
+    @InjectView(R.id.repair_53) ImageView repair53;
+    @InjectView(R.id.repair_54) ImageView repair54;
+    @InjectView(R.id.repair_55) ImageView repair55;
+    @InjectView(R.id.repair_56) ImageView repair56;
+    @InjectView(R.id.repair_57) ImageView repair57;
+    @InjectView(R.id.repair_58) ImageView repair58;
+    @InjectView(R.id.repair_59) ImageView repair59;
+    @InjectView(R.id.repair_60) ImageView repair60;
+    @InjectView(R.id.repair_61) ImageView repair61;
+    @InjectView(R.id.repair_62) ImageView repair62;
+    @InjectView(R.id.repair_63) ImageView repair63;
+    @InjectView(R.id.repair_64) ImageView repair64;
+    @InjectView(R.id.repair_65) ImageView repair65;
+    @InjectView(R.id.repair_66) ImageView repair66;
+    @InjectView(R.id.repair_67) ImageView repair67;
+    @InjectView(R.id.repair_68) ImageView repair68;
+    @InjectView(R.id.repair_69) ImageView repair69;
+    @InjectView(R.id.repair_70) ImageView repair70;
+    @InjectView(R.id.repair_71) ImageView repair71;
+    @InjectView(R.id.repair_72) ImageView repair72;
+    @InjectView(R.id.repair_73) ImageView repair73;
+    @InjectView(R.id.repair_74) ImageView repair74;
+    @InjectView(R.id.repair_75) ImageView repair75;
+    @InjectView(R.id.repair_76) ImageView repair76;
+    @InjectView(R.id.repair_77) ImageView repair77;
+    @InjectView(R.id.repair_78) ImageView repair78;
+    @InjectView(R.id.repair_79) ImageView repair79;
+    @InjectView(R.id.repair_80) ImageView repair80;
+    @InjectView(R.id.repair_81) ImageView repair81;
+    @InjectView(R.id.repair_82) ImageView repair82;
+    @InjectView(R.id.repair_83) ImageView repair83;
+    @InjectView(R.id.repair_84) ImageView repair84;
+    @InjectView(R.id.repair_85) ImageView repair85;
+    @InjectView(R.id.repair_86) ImageView repair86;
+    @InjectView(R.id.repair_87) ImageView repair87;
+    @InjectView(R.id.repair_88) ImageView repair88;
+    @InjectView(R.id.repair_89) ImageView repair89;
+    @InjectView(R.id.repair_90) ImageView repair90;
+    @InjectView(R.id.repair_91) ImageView repair91;
+    @InjectView(R.id.repair_92) ImageView repair92;
+    @InjectView(R.id.repair_93) ImageView repair93;
+    @InjectView(R.id.repair_94) ImageView repair94;
+    @InjectView(R.id.repair_95) ImageView repair95;
+    @InjectView(R.id.repair_96) ImageView repair96;
+    @InjectView(R.id.repair_97) ImageView repair97;
+    @InjectView(R.id.repair_98) ImageView repair98;
+    @InjectView(R.id.repair_99) ImageView repair99;
+    @InjectView(R.id.repair_100) ImageView repair100;
     @InjectView(R.id.start_repair_button) Button startRepairButton;
 
     private Handler mHandler = new Handler(){
@@ -87,7 +180,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 case 4:
                     startRepairButton.setClickable(false);
                     AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
-                    successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了2%!");
+                    successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了"+format(repairNum)+"!");
                     successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -114,15 +207,33 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                             startRepairButton.setText("正在努力修复");
                             startRepairButton.setClickable(false);
                             dialog.dismiss();
-                            list.get(wrong).setBackgroundResource(R.drawable.drawable_anim_repair);
-                            AnimationDrawable anim = (AnimationDrawable) list.get(wrong).getBackground();
-                            anim.stop();
-                            anim.start();
+                            for (int i = 0;i<wrongNum;i++){
+                                list.get(wrongs[i]).setBackgroundResource(R.drawable.drawable_anim_repair);
+                                AnimationDrawable anim = (AnimationDrawable) list.get(wrongs[i]).getBackground();
+                                repairList.add(anim);
+                            }
+                            int repairTime = 0;
+                            Timer timer = new Timer();
+                            //startRepairButton.setClickable(false);
+                            for (int k = 0; k < wrongNum; k++) {
+                                final int j = k;
+                                TimerTask task = new TimerTask() {
+                                    @Override
+                                    public void run() {
+
+                                        repairList.get(j).stop();
+                                        repairList.get(j).start();
+                                    }
+
+                                };
+                                timer.schedule(task, repairTime);
+                                repairTime += 7000;
+                            }
                             new Thread(){
                                 @Override
                                 public void run(){
                                     try {
-                                        Thread.currentThread().sleep(7000);
+                                        Thread.currentThread().sleep(7000*wrongNum);
                                     }catch (Exception e){
                                         e.printStackTrace();
                                     }
@@ -134,6 +245,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
 
                     builder.create().show();
                     hasWrong = false;
+                    break;
             }
         }
     };
@@ -258,7 +370,8 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
 
         ButterKnife.inject(this, view);
 
-
+        initWrongs();
+        sortWrongs();
         init();
         locationButton.setOnClickListener(this);
         locationButton.setOnLongClickListener(this);
@@ -273,6 +386,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         heatpointButton.setOnLongClickListener(this);
         list = new ArrayList<>();
         animList = new ArrayList<>();
+        repairList = new ArrayList<>();
         list.add(repair1);
         list.add(repair2);
         list.add(repair3);
@@ -283,13 +397,139 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         list.add(repair8);
         list.add(repair9);
         list.add(repair10);
+        list.add(repair11);
+        list.add(repair12);
+        list.add(repair13);
+        list.add(repair14);
+        list.add(repair15);
+        list.add(repair16);
+        list.add(repair17);
+        list.add(repair18);
+        list.add(repair19);
+        list.add(repair20);
+        list.add(repair21);
+        list.add(repair22);
+        list.add(repair23);
+        list.add(repair24);
+        list.add(repair25);
+        list.add(repair26);
+        list.add(repair27);
+        list.add(repair28);
+        list.add(repair29);
+        list.add(repair30);
+        list.add(repair31);
+        list.add(repair32);
+        list.add(repair33);
+        list.add(repair34);
+        list.add(repair35);
+        list.add(repair36);
+        list.add(repair37);
+        list.add(repair38);
+        list.add(repair39);
+        list.add(repair40);
+        list.add(repair41);
+        list.add(repair42);
+        list.add(repair43);
+        list.add(repair44);
+        list.add(repair45);
+        list.add(repair46);
+        list.add(repair47);
+        list.add(repair48);
+        list.add(repair49);
+        list.add(repair50);
+        list.add(repair51);
+        list.add(repair52);
+        list.add(repair53);
+        list.add(repair54);
+        list.add(repair55);
+        list.add(repair56);
+        list.add(repair57);
+        list.add(repair58);
+        list.add(repair59);
+        list.add(repair60);
+        list.add(repair61);
+        list.add(repair62);
+        list.add(repair63);
+        list.add(repair64);
+        list.add(repair65);
+        list.add(repair66);
+        list.add(repair67);
+        list.add(repair68);
+        list.add(repair69);
+        list.add(repair70);
+        list.add(repair71);
+        list.add(repair72);
+        list.add(repair73);
+        list.add(repair74);
+        list.add(repair75);
+        list.add(repair76);
+        list.add(repair77);
+        list.add(repair78);
+        list.add(repair79);
+        list.add(repair80);
+        list.add(repair81);
+        list.add(repair82);
+        list.add(repair83);
+        list.add(repair84);
+        list.add(repair85);
+        list.add(repair86);
+        list.add(repair87);
+        list.add(repair88);
+        list.add(repair89);
+        list.add(repair90);
+        list.add(repair91);
+        list.add(repair92);
+        list.add(repair93);
+        list.add(repair94);
+        list.add(repair95);
+        list.add(repair96);
+        list.add(repair97);
+        list.add(repair98);
+        list.add(repair99);
+        list.add(repair100);
 
         registeAnim();
 
 
         return view;
     }
+    private void initWrongs(){
+        for (int i = 0;i<wrongNum;i++){
+            int wrong = (int)(Math.random()*100);
+            boolean sameWrong = false;
+            for (int j = 0;j<wrongNum;j++){
+                if (wrong==wrongs[j]){
+                    sameWrong = true;
+                }
+            }
+            if (!sameWrong){
+                wrongs[i] = wrong;
+            }else {
+                wrongNum --;
+            }
+        }
+    }
+    private boolean compareWithWrong(int i){
+        for (int j = 0;j<wrongNum;j++){
+            if (i == wrongs[j]){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    private void sortWrongs(){
+        for (int i = 0;i<wrongNum;i++){
+            int min = wrongs[i];
+            for (int j = i;j<wrongNum;j++){
+                if (wrongs[j]<min){
+                    wrongs[i] = wrongs[j];
+                    wrongs[j] = min;
+                    min = wrongs[i];
+                }
+            }
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -298,8 +538,8 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     //注册动画
     private void registeAnim(){
 
-        for (int i=0;i<10;i++){
-            if (i == wrong){
+        for (int i=0;i<100;i++){
+            if (compareWithWrong(i)){
                 list.get(i).setBackgroundResource(R.drawable.drawable_anim_wrong);
             }else {
                 list.get(i).setBackgroundResource(R.drawable.drawable_anim);
@@ -310,33 +550,50 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         startRepairButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (startRepairButton.getText().equals("修复")){
+                if (startRepairButton.getText().equals("修复")) {
                     startRepairButton.setText("正在努力修复");
                     startRepairButton.setClickable(false);
-                    list.get(wrong).setBackgroundResource(R.drawable.drawable_anim_repair);
-                    AnimationDrawable anim = (AnimationDrawable) list.get(wrong).getBackground();
-                    anim.stop();
-                    anim.start();
-                    new Thread(){
+                    for (int i = 0; i < wrongNum; i++) {
+                        list.get(wrongs[i]).setBackgroundResource(R.drawable.drawable_anim_repair);
+                        AnimationDrawable anim = (AnimationDrawable) list.get(wrongs[i]).getBackground();
+                        repairList.add(anim);
+                    }
+                    int repairTime = 0;
+                    Timer timer = new Timer();
+                    //startRepairButton.setClickable(false);
+                    for (int k = 0; k < wrongNum; k++) {
+                        final int j = k;
+                        TimerTask task = new TimerTask() {
+                            @Override
+                            public void run() {
+
+                                repairList.get(j).stop();
+                                repairList.get(j).start();
+                            }
+
+                        };
+                        timer.schedule(task, repairTime);
+                        repairTime += 7000;
+                    }
+                    new Thread() {
                         @Override
-                        public void run(){
+                        public void run() {
                             try {
-                                Thread.currentThread().sleep(7000);
+                                Thread.currentThread().sleep(7000*wrongNum);
                                 mHandler.sendEmptyMessage(4);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     }.start();
-                }
-                else{
+                } else {
                     startRepairButton.setClickable(false);
                     WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
                     if (is3rd(getActivity()) || wifiManager.isWifiEnabled()) {
                         int time = 0;
                         Timer timer = new Timer();
                         //startRepairButton.setClickable(false);
-                        for (int i = 0; i < 10; i++) {
+                        for (int i = 0; i < 100; i++) {
                             final int j = i;
                             TimerTask task = new TimerTask() {
                                 @Override
@@ -353,24 +610,24 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                         }
                         if (hasWrong) {
                             final int i = wrong;
-                            new Thread(){
+                            new Thread() {
                                 @Override
-                                public void run(){
+                                public void run() {
                                     try {
-                                        Thread.currentThread().sleep(20000);
-                                    }catch (Exception e){
+                                        Thread.currentThread().sleep(200000);
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     mHandler.sendEmptyMessage(5);
                                 }
                             }.start();
                         } else {
-                            new Thread(){
+                            new Thread() {
                                 @Override
-                                public void run(){
+                                public void run() {
                                     try {
-                                        Thread.currentThread().sleep(20000);
-                                    }catch (Exception e){
+                                        Thread.currentThread().sleep(200000);
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
 
@@ -398,7 +655,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         startRepairButton.setText("start");
         startRepairButton.setClickable(true);
         animList = new ArrayList<>();
-        for (int i=0;i<10;i++){
+        for (int i=0;i<100;i++){
             list.get(i).setBackgroundResource(R.drawable.ic_launcher);
             list.get(i).setBackgroundResource(R.drawable.drawable_anim);
             AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
@@ -560,6 +817,10 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
             }
         }
 
+    }
+    private String format(double size) {
+        return String.format("%1$.2f%%", size);
+        // return new BigDecimal("" + size).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
     @Override
     public void onPause() {
