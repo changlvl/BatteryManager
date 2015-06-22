@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.LocationManager;
@@ -26,12 +28,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.morega.batterymanager.Info.StatusInfo;
 import com.morega.batterymanager.R;
 import com.morega.batterymanager.Utils.Touchable;
+import com.morega.batterymanager.database.DataBaseHelper;
+import com.morega.batterymanager.database.SQLiteInfo;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -177,9 +183,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 case 3:
                     initAnim();
                     Toast.makeText(getActivity(), "您的电池非常健康哦", Toast.LENGTH_SHORT).show();
+                    Touchable.setTouchable(true);
                     break;
                 case 4:
                     startRepairButton.setClickable(false);
+                    setDBNoWrongs();
                     AlertDialog.Builder successBuilder = new AlertDialog.Builder(getActivity());
                     successBuilder.setMessage("修复成功！经过修复，您的电池的续航能力提高了"+format(repairNum)+"!");
                     successBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -250,9 +258,24 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                     hasWrong = false;
                     Touchable.setTouchable(true);
                     break;
+                case 6:
+                    startRepairButton.setText("start");
+                    startRepairButton.setClickable(true);
+                    Touchable.setTouchable(true);
+                    break;
             }
         }
     };
+    private void setDBNoWrongs(){
+        DataBaseHelper helper = new DataBaseHelper(getActivity(), SQLiteInfo.DB.DB_NAME);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        Calendar calendar = Calendar.getInstance();
+        values.put("has_wrongs","no");
+        StatusInfo.setHas_wrongs("no");
+        values.put("time_tick",String.valueOf(calendar.get(Calendar.MONTH))+"."+String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+        db.insert("battery",null,values);
+    }
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()){
@@ -542,14 +565,22 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
 
     //注册动画
     private void registeAnim(final ViewGroup container){
-        for (int i=0;i<100;i++){
-            if (compareWithWrong(i)){
-                list.get(i).setBackgroundResource(R.drawable.drawable_anim_wrong);
-            }else {
-                list.get(i).setBackgroundResource(R.drawable.drawable_anim);
+        if (StatusInfo.getHas_wrongs().equals("yes")){
+            for (int i=0;i<100;i++){
+                if (compareWithWrong(i)){
+                    list.get(i).setBackgroundResource(R.drawable.drawable_anim_wrong);
+                }else {
+                    list.get(i).setBackgroundResource(R.drawable.drawable_anim);
+                }
+                AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
+                animList.add(anim);
             }
-            AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
-            animList.add(anim);
+        }else {
+            for (int i=0;i<100;i++){
+                list.get(i).setBackgroundResource(R.drawable.drawable_anim);
+                AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
+                animList.add(anim);
+            }
         }
         startRepairButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -597,53 +628,70 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                     startRepairButton.setClickable(false);
                     WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
                     if (is3rd(getActivity()) || wifiManager.isWifiEnabled()) {
-                        int time = 0;
-                        Timer timer = new Timer();
-                        //startRepairButton.setClickable(false);
-                        for (int i = 0; i < 100; i++) {
-                            final int j = i;
-                            TimerTask task = new TimerTask() {
-                                @Override
-                                public void run() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("为了保证检测和修复的质量，请不要在检测和修复过程中离开当前页面。");
+                        builder.setTitle("提示");
+                        builder.setNegativeButton("等会再说", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                mHandler.sendEmptyMessage(6);
+                            }
+                        });
+                        builder.setPositiveButton("马上开始", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Touchable.setTouchable(false);
+                                int time = 0;
+                                Timer timer = new Timer();
+                                //startRepairButton.setClickable(false);
+                                for (int i = 0; i < 100; i++) {
+                                    final int j = i;
+                                    TimerTask task = new TimerTask() {
+                                        @Override
+                                        public void run() {
 
-                                    animList.get(j).stop();
-                                    animList.get(j).start();
-                                }
+                                            animList.get(j).stop();
+                                            animList.get(j).start();
+                                        }
 
-                            };
-                            timer.schedule(task, time);
-                            time += 2000;
-                            startRepairButton.setText("正在检查电池");
-                        }
-                        if (hasWrong) {
-                            final int i = wrong;
-                            new Thread() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Thread.currentThread().sleep(200000);
-                                        Touchable.setTouchable(true);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                    mHandler.sendEmptyMessage(5);
+                                    };
+                                    timer.schedule(task, time);
+                                    time += 2000;
+                                    startRepairButton.setText("正在检查电池");
                                 }
-                            }.start();
-                        } else {
-                            new Thread() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Thread.currentThread().sleep(200000);
-                                        Touchable.setTouchable(true);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                if (StatusInfo.getHas_wrongs().equals("yes")) {
+                                    final int i = wrong;
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                Thread.currentThread().sleep(200000);
+                                                Touchable.setTouchable(true);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                            mHandler.sendEmptyMessage(5);
+                                        }
+                                    }.start();
+                                } else {
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                Thread.currentThread().sleep(200000);
+                                                Touchable.setTouchable(true);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
 
-                                    mHandler.sendEmptyMessage(3);
+                                            mHandler.sendEmptyMessage(3);
+                                        }
+                                    }.start();
                                 }
-                            }.start();
-                        }
+                            }
+                        });
+                        builder.create().show();
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage("只有在联通网络状态下才能修复电池噢！~");

@@ -12,12 +12,16 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.morega.batterymanager.Adapter.MyViewPagerAdapter;
+import com.morega.batterymanager.Info.StatusInfo;
+import com.morega.batterymanager.Info.TableInfo;
 import com.morega.batterymanager.R;
 import com.morega.batterymanager.Utils.Touchable;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.update.UmengUpdateAgent;
+
+import java.util.Calendar;
 
 import butterknife.ButterKnife;
 
@@ -83,6 +87,15 @@ public class MainActivity extends BaseActivity {
 
         this.powerManager = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
         this.wakeLock = this.powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
+
+        Calendar calendar = Calendar.getInstance();
+        String data = String.valueOf(calendar.get(Calendar.MONTH))+"."+String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        TableInfo.nowStatus(MainActivity.this);
+        if (StatusInfo.getTime_tick()!=null && (!StatusInfo.getTime_tick().equals(""))){
+            if (Double.parseDouble(data)-Double.parseDouble(StatusInfo.getTime_tick())>0.03){
+                StatusInfo.setHas_wrongs("yes");
+            }
+        }
     }
 
     @Override

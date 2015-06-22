@@ -171,7 +171,12 @@ public class BatteryStatusFragment extends BaseFragment {
             }
         };
         //注册广播
-        getActivity().registerReceiver(batteryChangedReceiver, intentFilter);
+        try {
+            getActivity().registerReceiver(batteryChangedReceiver, intentFilter);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return view;
     }
 
