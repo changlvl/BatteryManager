@@ -17,18 +17,18 @@
     <string name="battery_status_temperature">状态界面的温度显示</string>
     <string name="battery_technology">电池技术：</string>
     <string name="battery_voltage">电池电压：</string>
-    <string name="bluetooth_on_or_off">蓝牙开关</string>
+    <string name="bluetooth_on_or_off">蓝 牙</string>
     <string name="connect_status">连接情况：</string>
-    <string name="data_on_or_off">3g/4g</string>
+    <string name="data_on_or_off">3G/4G</string>
     <string name="find_tab_name">发现</string>
-    <string name="heatpoint_on_or_off">热点开关</string>
+    <string name="heatpoint_on_or_off">热 点</string>
     <string name="hello_world">Hello world!</string>
-    <string name="location_on_or_off">定位开关</string>
+    <string name="location_on_or_off">定 位</string>
     <string name="menu_settings">Settings</string>
     <string name="more_power_saving">更省电</string>
-    <string name="needtime_of_charging">预计充电剩余：</string>
+    <string name="needtime_of_charging">预计充电剩余</string>
     <string name="phone_type">手机型号：</string>
-    <string name="power_bluetooth">蓝牙</string>
+    <string name="power_bluetooth">蓝 牙</string>
     <string name="power_cell">手机信号</string>
     <string name="power_idle">手机待机</string>
     <string name="power_phone">语音通话</string>
@@ -43,5 +43,5 @@
     <string name="tb_munion_tip_download_prefix">正在下载:</string>
     <string name="temperature_status">温度状态：</string>
     <string name="umeng_common_icon">icon</string>
-    <string name="wiwi_on_or_off">Wifi开关</string>
+
 </resources>

@@ -5,11 +5,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_marginTop="10dp"
+        android:paddingTop="14dp"
         android:gravity="center_horizontal"
         android:text="@string/ranking_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="31dp"
+        android:textSize="12sp"
+        android:alpha="0.65" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_ly"
         android:layout_width="match_parent"

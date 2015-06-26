@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -57,16 +56,15 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     private ArrayList<ImageView> list;
     private ArrayList<AnimationDrawable> animList;
     private ArrayList<AnimationDrawable> repairList;
-    private boolean hasWrong = true;
-    private int wrong;
     private int wrongNum = (int)(Math.random() *15+1);
     private int wrongs[] = new int[wrongNum];
     private double repairNum = (double)wrongNum*4/15;
-    @InjectView(R.id.location_button) Button locationButton;
-    @InjectView(R.id.wifi_button) Button wifiButton;
-    @InjectView(R.id.data_button) Button dataButton;
-    @InjectView(R.id.bluetooth_button) Button bluetoothButton;
-    @InjectView(R.id.heatpoint_button) Button heatpointButton;
+    @InjectView(R.id.location_button)
+    ImageView locationButton;
+    @InjectView(R.id.wifi_button) ImageView wifiButton;
+    @InjectView(R.id.data_button) ImageView dataButton;
+    @InjectView(R.id.bluetooth_button) ImageView bluetoothButton;
+    @InjectView(R.id.heatpoint_button) ImageView heatpointButton;
     @InjectView(R.id.repair_1) ImageView repair1;
     @InjectView(R.id.repair_2) ImageView repair2;
     @InjectView(R.id.repair_3) ImageView repair3;
@@ -167,6 +165,38 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     @InjectView(R.id.repair_98) ImageView repair98;
     @InjectView(R.id.repair_99) ImageView repair99;
     @InjectView(R.id.repair_100) ImageView repair100;
+    @InjectView(R.id.repair_101) ImageView repair101;
+    @InjectView(R.id.repair_102) ImageView repair102;
+    @InjectView(R.id.repair_103) ImageView repair103;
+    @InjectView(R.id.repair_104) ImageView repair104;
+    @InjectView(R.id.repair_105) ImageView repair105;
+    @InjectView(R.id.repair_106) ImageView repair106;
+    @InjectView(R.id.repair_107) ImageView repair107;
+    @InjectView(R.id.repair_108) ImageView repair108;
+    @InjectView(R.id.repair_109) ImageView repair109;
+    @InjectView(R.id.repair_110) ImageView repair110;
+    @InjectView(R.id.repair_111) ImageView repair111;
+    @InjectView(R.id.repair_112) ImageView repair112;
+    @InjectView(R.id.repair_113) ImageView repair113;
+    @InjectView(R.id.repair_114) ImageView repair114;
+    @InjectView(R.id.repair_115) ImageView repair115;
+    @InjectView(R.id.repair_116) ImageView repair116;
+    @InjectView(R.id.repair_117) ImageView repair117;
+    @InjectView(R.id.repair_118) ImageView repair118;
+    @InjectView(R.id.repair_119) ImageView repair119;
+    @InjectView(R.id.repair_120) ImageView repair120;
+    @InjectView(R.id.repair_121) ImageView repair121;
+    @InjectView(R.id.repair_122) ImageView repair122;
+    @InjectView(R.id.repair_123) ImageView repair123;
+    @InjectView(R.id.repair_124) ImageView repair124;
+    @InjectView(R.id.repair_125) ImageView repair125;
+    @InjectView(R.id.repair_126) ImageView repair126;
+    @InjectView(R.id.repair_127) ImageView repair127;
+    @InjectView(R.id.repair_128) ImageView repair128;
+    @InjectView(R.id.repair_129) ImageView repair129;
+    @InjectView(R.id.repair_130) ImageView repair130;
+    @InjectView(R.id.repair_131) ImageView repair131;
+
     @InjectView(R.id.start_repair_button) Button startRepairButton;
 
     private Handler mHandler = new Handler(){
@@ -255,7 +285,6 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                     });
 
                     builder.create().show();
-                    hasWrong = false;
                     Touchable.setTouchable(true);
                     break;
                 case 6:
@@ -313,13 +342,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
             case R.id.location_button:
                 if (locationTag){
                     openGPS(getActivity());
-                    locationButton.setText("off");
-                    locationButton.setBackgroundColor(Color.GRAY);
+                    locationButton.setBackgroundResource(R.drawable.gps_hui);
                     locationTag = false;
                 }else {
                     openGPS(getActivity());
-                    locationButton.setText("on");
-                    locationButton.setBackgroundColor(Color.BLUE);
+                    locationButton.setBackgroundResource(R.drawable.gps_l);
                     locationTag = true;
                 }
                 break;
@@ -327,27 +354,23 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 if (wifiTag){
                     WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
                     wifiManager.setWifiEnabled(!wifiTag);
-                    wifiButton.setText("off");
-                    wifiButton.setBackgroundColor(Color.GRAY);
+                    wifiButton.setBackgroundResource(R.drawable.wifi_hui);
                     wifiTag = false;
                 }else {
                     WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
                     wifiManager.setWifiEnabled(!wifiTag);
-                    wifiButton.setText("on");
-                    wifiButton.setBackgroundColor(Color.BLUE);
+                    wifiButton.setBackgroundResource(R.drawable.wifi_l);
                     wifiTag = true;
                 }
                 break;
             case R.id.data_button:
                 if (dataTag){
                     setMobileData(getActivity(), false);
-                    dataButton.setText("off");
-                    dataButton.setBackgroundColor(Color.GRAY);
+                    dataButton.setBackgroundResource(R.drawable.shuju_hui);
                     dataTag = false;
                 }else {
                     setMobileData(getActivity(), true);
-                    dataButton.setText("on");
-                    dataButton.setBackgroundColor(Color.BLUE);
+                    dataButton.setBackgroundResource(R.drawable.shuju_l);
                     dataTag = true;
                 }
                 break;
@@ -356,15 +379,13 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
                             .getDefaultAdapter();
                     mBluetoothAdapter.disable();
-                    bluetoothButton.setText("off");
-                    bluetoothButton.setBackgroundColor(Color.GRAY);
+                    bluetoothButton.setBackgroundResource(R.drawable.lanya_hui);
                     bluetoothTag = false;
                 }else {
                     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
                             .getDefaultAdapter();
                     mBluetoothAdapter.enable();
-                    bluetoothButton.setText("on");
-                    bluetoothButton.setBackgroundColor(Color.BLUE);
+                    bluetoothButton.setBackgroundResource(R.drawable.lanya_l);
                     bluetoothTag = true;
                 }
                 break;
@@ -514,6 +535,38 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         list.add(repair98);
         list.add(repair99);
         list.add(repair100);
+        list.add(repair101);
+        list.add(repair102);
+        list.add(repair103);
+        list.add(repair104);
+        list.add(repair105);
+        list.add(repair106);
+        list.add(repair107);
+        list.add(repair108);
+        list.add(repair109);
+        list.add(repair110);
+        list.add(repair111);
+        list.add(repair112);
+        list.add(repair113);
+        list.add(repair114);
+        list.add(repair115);
+        list.add(repair116);
+        list.add(repair117);
+        list.add(repair118);
+        list.add(repair119);
+        list.add(repair120);
+        list.add(repair121);
+        list.add(repair122);
+        list.add(repair123);
+        list.add(repair124);
+        list.add(repair125);
+        list.add(repair126);
+        list.add(repair127);
+        list.add(repair128);
+        list.add(repair129);
+        list.add(repair130);
+        list.add(repair131);
+
 
         registeAnim(container);
 
@@ -522,7 +575,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     }
     private void initWrongs(){
         for (int i = 0;i<wrongNum;i++){
-            int wrong = (int)(Math.random()*100);
+            int wrong = (int)(Math.random()*131);
             boolean sameWrong = false;
             for (int j = 0;j<wrongNum;j++){
                 if (wrong==wrongs[j]){
@@ -566,7 +619,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     //注册动画
     private void registeAnim(final ViewGroup container){
         if (StatusInfo.getHas_wrongs().equals("yes")){
-            for (int i=0;i<100;i++){
+            for (int i=0;i<131;i++){
                 if (compareWithWrong(i)){
                     list.get(i).setBackgroundResource(R.drawable.drawable_anim_wrong);
                 }else {
@@ -576,7 +629,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                 animList.add(anim);
             }
         }else {
-            for (int i=0;i<100;i++){
+            for (int i=0;i<131;i++){
                 list.get(i).setBackgroundResource(R.drawable.drawable_anim);
                 AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
                 animList.add(anim);
@@ -645,7 +698,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                                 int time = 0;
                                 Timer timer = new Timer();
                                 //startRepairButton.setClickable(false);
-                                for (int i = 0; i < 100; i++) {
+                                for (int i = 0; i < 131; i++) {
                                     final int j = i;
                                     TimerTask task = new TimerTask() {
                                         @Override
@@ -661,12 +714,11 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                                     startRepairButton.setText("正在检查电池");
                                 }
                                 if (StatusInfo.getHas_wrongs().equals("yes")) {
-                                    final int i = wrong;
                                     new Thread() {
                                         @Override
                                         public void run() {
                                             try {
-                                                Thread.currentThread().sleep(200000);
+                                                Thread.currentThread().sleep(262000);
                                                 Touchable.setTouchable(true);
                                             } catch (Exception e) {
                                                 e.printStackTrace();
@@ -679,7 +731,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                                         @Override
                                         public void run() {
                                             try {
-                                                Thread.currentThread().sleep(200000);
+                                                Thread.currentThread().sleep(262000);
                                                 Touchable.setTouchable(true);
                                             } catch (Exception e) {
                                                 e.printStackTrace();
@@ -713,7 +765,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
         startRepairButton.setText("start");
         startRepairButton.setClickable(true);
         animList = new ArrayList<>();
-        for (int i=0;i<100;i++){
+        for (int i=0;i<131;i++){
             list.get(i).setBackgroundResource(R.drawable.ic_launcher);
             list.get(i).setBackgroundResource(R.drawable.drawable_anim);
             AnimationDrawable anim = (AnimationDrawable) list.get(i).getBackground();
@@ -725,50 +777,40 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     private void init(){
         locationTag = GPSisOPen(getActivity());
         if (locationTag){
-            locationButton.setText("on");
-            locationButton.setBackgroundColor(Color.BLUE);
+            locationButton.setBackgroundResource(R.drawable.gps_l);
         }else {
-            locationButton.setText("off");
-            locationButton.setBackgroundColor(Color.GRAY);
+            locationButton.setBackgroundResource(R.drawable.gps_hui);
         }
 
         WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
         wifiTag = wifiManager.isWifiEnabled();
         if (wifiTag){
-            wifiButton.setText("on");
-            wifiButton.setBackgroundColor(Color.BLUE);
+            wifiButton.setBackgroundResource(R.drawable.wifi_l);
         }else {
-            wifiButton.setText("off");
-            wifiButton.setBackgroundColor(Color.GRAY);
+            wifiButton.setBackgroundResource(R.drawable.wifi_hui);
         }
 
         dataTag = is3rd(getActivity());
         if (dataTag){
-            dataButton.setText("on");
-            dataButton.setBackgroundColor(Color.BLUE);
+            dataButton.setBackgroundResource(R.drawable.shuju_l);
         }else {
-            dataButton.setText("off");
-            dataButton.setBackgroundColor(Color.GRAY);
+            dataButton.setBackgroundResource(R.drawable.shuju_hui);
         }
         //判断蓝牙的初始状态
         bluetoothTag = isBluetoothOn(getActivity());
         if (bluetoothTag){
             bluetoothTag = true;
-            bluetoothButton.setText("on");
-            bluetoothButton.setBackgroundColor(Color.BLUE);
+            bluetoothButton.setBackgroundResource(R.drawable.lanya_l);
         }else {
             bluetoothTag = false;
-            bluetoothButton.setText("off");
-            bluetoothButton.setBackgroundColor(Color.GRAY);
+            bluetoothButton.setBackgroundResource(R.drawable.lanya_hui);
         }
 
         heatpointTag = isHeatpointTag(getActivity());
         if (heatpointTag){
-            heatpointButton.setText("on");
-            heatpointButton.setBackgroundColor(Color.BLUE);
+            heatpointButton.setBackgroundResource(R.drawable.redian_l);
         }else {
-            heatpointButton.setText("off");
-            heatpointButton.setBackgroundColor(Color.GRAY);
+            heatpointButton.setBackgroundResource(R.drawable.redian_hui);
         }
     }
 

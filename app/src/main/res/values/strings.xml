@@ -29,9 +29,9 @@
     <string name="power_usage_level_and_status" translatable="false"><xliff:g id="LEVEL">%1$s</xliff:g> - <xliff:g id="STATUS">%2$s</xliff:g></string>
     <string name="battery_status_temperature">状态界面的温度显示</string>
     <string name="battery_status_level">状态界面的电量显示</string>
-    <string name="remain_usable_time" translatable="false">剩余可用时间：</string>
-    <string name="remain_time" translatable="false">待机可用时间：</string>
-    <string name="needtime_of_charging">预计充电剩余：</string>
+    <string name="remain_usable_time" translatable="false">剩余可用时间</string>
+    <string name="remain_time" translatable="false">待机可用时间</string>
+    <string name="needtime_of_charging">预计充电剩余</string>
     <string name="battery_info_analyse">电池信息分析</string>
     <string name="phone_type">手机型号：</string>
     <string name="connect_status">连接情况：</string>
@@ -42,11 +42,11 @@
     <string name="find_tab_name">发现</string>
     <string name="specialty_tab_name">高级</string>
     <string name="battery_dally_maintenance">每日电池检测和维护</string>
-    <string name="location_on_or_off">定位开关</string>
-    <string name="wiwi_on_or_off">Wifi开关</string>
-    <string name="data_on_or_off">3g/4g</string>
-    <string name="bluetooth_on_or_off">蓝牙开关</string>
-    <string name="heatpoint_on_or_off">热点开关</string>
+    <string name="location_on_or_off">定 位</string>
+    <string name="wifi_on_or_off" translatable="false">WIFI</string>
+    <string name="data_on_or_off">3G/4G</string>
+    <string name="bluetooth_on_or_off">蓝 牙</string>
+    <string name="heatpoint_on_or_off">热 点</string>
     <string name="more_power_saving">更省电</string>
     <string name="ranking_list">24小时耗电排行榜</string>
     

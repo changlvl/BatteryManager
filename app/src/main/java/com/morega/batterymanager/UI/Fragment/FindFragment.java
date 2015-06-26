@@ -247,7 +247,6 @@ public class FindFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             } else {
                 holder = (Holder) convertView.getTag();
             }
-
             BatterySipper sipper = getItem(position);
             holder.appName.setText(sipper.getName());
             holder.appIcon.setImageDrawable(sipper.getIcon());
@@ -260,17 +259,17 @@ public class FindFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             });
             if (sipper.getSystemType() == BatteryInfo.SystemType.SYSTEM){
                 holder.button.setText("查看");
-                holder.button.setBackgroundColor(Color.parseColor("#206060"));
+                holder.button.setBackgroundColor(Color.parseColor("#8cc814"));
             }
             if (sipper.getSystemType() == BatteryInfo.SystemType.APP
                     && ActivityUtils.isRunningApp(getActivity(), sipper.getPackageName())){
                 holder.button.setText("关闭");
-                holder.button.setBackgroundColor(Color.parseColor("#206020"));
+                holder.button.setBackgroundColor(Color.parseColor("#fdae47"));
             }
             if (sipper.getSystemType() == BatteryInfo.SystemType.APP
                     && !ActivityUtils.isRunningApp(getActivity(), sipper.getPackageName())){
                 holder.button.setText("不活跃");
-                holder.button.setBackgroundColor(Color.parseColor("#000000"));
+                holder.button.setBackgroundColor(Color.parseColor("#a0a0a0"));
 
             }
             double percentOfTotal = sipper.getPercentOfTotal();

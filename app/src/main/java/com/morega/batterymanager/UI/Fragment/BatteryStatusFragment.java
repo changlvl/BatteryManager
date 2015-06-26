@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
@@ -14,12 +12,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.morega.batterymanager.R;
 import com.morega.batterymanager.UI.ShowNotifyStatus;
-import com.morega.batterymanager.UI.View.LevelProgressView;
 import com.morega.batterymanager.Utils.ComputeForVolume;
 import com.umeng.analytics.MobclickAgent;
 
@@ -66,12 +62,11 @@ public class BatteryStatusFragment extends BaseFragment {
     //用于记录电量显示的变化
     private int level1 = 0;
     private BroadcastReceiver batteryChangedReceiver;
-    @InjectView(R.id.level) TextView levelView;
-    @InjectView(R.id.battery_status_level) ImageView batteryStatusLevel;
+    @InjectView(R.id.level_hour) TextView levelHour;
+    @InjectView(R.id.level_minute) TextView levelMinute;
     @InjectView(R.id.battery_status_temperature) TextView batteryStatusTemperature;
-    @InjectView(R.id.charging_or_not) TextView chargingOrNot;
+    @InjectView(R.id.remain_time_or_charging_time) TextView remainTimeOrChargingTime;
     @InjectView(R.id.status_from_remain_level) TextView statusFromRemainLevel;
-    @InjectView(R.id.reamin_usable_time) TextView remainUsableTime;
     @InjectView(R.id.phone_type) TextView phoneType;
     @InjectView(R.id.connect_status) TextView connectStatus;
     @InjectView(R.id.battey_status) TextView batteryStatus;
@@ -154,7 +149,7 @@ public class BatteryStatusFragment extends BaseFragment {
                 //显示可待机时间
                 setRemainTime(intent);
                 //显示电量百分比，以图片形式
-                setLevel(intent);
+//                setLevel(intent);
                 //TODO 应该显示的是当前状态的提示语，这里现在是版本号获取和用户反馈，之后用户反馈要移到别的地方
 //                int version = getVersionCode(getActivity());
 //                statusFromRemainLevel.setText(String.valueOf(version));
@@ -180,31 +175,16 @@ public class BatteryStatusFragment extends BaseFragment {
         return view;
     }
 
-    private void setLevel(Intent intent){
-        //画图，自定义进度条
-        LevelProgressView progressView = new LevelProgressView(getActivity());
-        //设置当前电量值
-        progressView.setCurrentCount(ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
-        //设置最大值
-        progressView.setMaxCount(100);
-        //切成bitmap，切圆角
-        Bitmap bitmap = Bitmap.createBitmap(250, 100, Bitmap.Config.ARGB_4444);
-        progressView.draw(new Canvas(bitmap));
-        //把bitmap放到控件中
-        batteryStatusLevel.setImageBitmap(bitmap);
-        //在图下面用文字显示电量
-        levelView.setText("当前电量：" + ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) + "%");
-    }
     //根据温度显示不同温度色块
     private void setTemperature(){
         temperatureStatus.setText(String.valueOf((double) temperature / 10) + "\u2103");
         batteryStatusTemperature.setText(String.valueOf((double) temperature / 10) + "\u2103");
         if (temperature/10 < 30){
-            batteryStatusTemperature.setBackgroundColor(Color.GREEN);
+            batteryStatusTemperature.setTextColor(Color.parseColor("#d5ff55"));
         }else if (temperature/10 <40){
-            batteryStatusTemperature.setBackgroundColor(Color.YELLOW);
+            batteryStatusTemperature.setTextColor(Color.parseColor("#f9ff55"));
         }else if (temperature/10 >= 40){
-            batteryStatusTemperature.setBackgroundColor(Color.RED);
+            batteryStatusTemperature.setTextColor(Color.RED);
         }
     }
     private void setHealth(){
@@ -240,6 +220,7 @@ public class BatteryStatusFragment extends BaseFragment {
                 sstatus = "放电中";
                 if (level<=20){
                     statusFromRemainLevel.setText("电池电量不足,这样下去很快要自动关机了噢");
+//                    statusFromRemainLevel.setTextColor(Color.parseColor());
                 }else if (level>=60){
                     statusFromRemainLevel.setText("充电充得饱饱的，情况一切正常");
                 }else {
@@ -286,7 +267,7 @@ public class BatteryStatusFragment extends BaseFragment {
 
         if (status==BatteryManager.BATTERY_STATUS_CHARGING){
             timeForCharging(volume, ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
-            chargingOrNot.setText(R.string.needtime_of_charging);
+            remainTimeOrChargingTime.setText(R.string.needtime_of_charging);
             volumeflag_out = 0;
             if (volumeflag == 0 ){
                 time1 = ComputeForVolume.FirstTime();
@@ -302,11 +283,10 @@ public class BatteryStatusFragment extends BaseFragment {
                 }
             }
         }else if (status == BatteryManager.BATTERY_STATUS_FULL){
-            chargingOrNot.setText("已充满");
-            remainUsableTime.setText("");
+            remainTimeOrChargingTime.setText("已充满");
         }else {
             if (volumeflag_out==0){
-                chargingOrNot.setText(R.string.remain_time);
+                remainTimeOrChargingTime.setText(R.string.remain_time);
                 //TODO replace volume_out to a value in type
                 time1 = ComputeForVolume.FirstTime();
                 level1 = ComputeForVolume.getLevel(intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100));
@@ -314,7 +294,7 @@ public class BatteryStatusFragment extends BaseFragment {
                 volumeflag_out++;
             }else if ( volumeflag_out == 1 && ComputeForVolume.getLevel
                     (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)) ==(level1-1)){
-                chargingOrNot.setText(R.string.remain_usable_time);
+                remainTimeOrChargingTime.setText(R.string.remain_usable_time);
                 remainTime = ComputeUsingTime(time1, ComputeForVolume.getLevel
                         (intent.getIntExtra("level", 0), intent.getIntExtra("scale", 100)));
                 timeToShow(remainTime);
@@ -351,7 +331,8 @@ public class BatteryStatusFragment extends BaseFragment {
     private void timeToShow(double time){
         int hour = (int)time/60/60;
         int minute = (int)(time-hour*60*60)/60;
-        remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
+        levelHour.setText(String.valueOf(hour));
+        levelMinute.setText(String.valueOf(minute));
     }
     //剩余待机时间
     private void timeForAwait(double volume_out,double level){
@@ -376,7 +357,8 @@ public class BatteryStatusFragment extends BaseFragment {
         time = volume_out*level/100/using;
         int hour = (int)time/60/60;
         int minute = (int)(time-hour*60*60)/60;
-        remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
+        levelHour.setText(String.valueOf(hour));
+        levelMinute.setText(String.valueOf(minute));
     }
 
     //剩余充电时间
@@ -389,7 +371,8 @@ public class BatteryStatusFragment extends BaseFragment {
         }
         int hour = (int)time/60/60;
         int minute = (int)(time-hour*60*60)/60;
-        remainUsableTime.setText(String.valueOf(hour)+"小时"+String.valueOf(minute)+"分钟");
+        levelHour.setText(String.valueOf(hour));
+        levelMinute.setText(String.valueOf(minute));
     }
 
 //    public static int getVersionCode(Context context)//获取版本号(内部识别号)

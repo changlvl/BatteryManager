@@ -6,81 +6,115 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:paddingTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="90dp"
         android:orientation="horizontal">
         <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="72dp"
+            android:layout_height="90dp"
             android:orientation="vertical">
-            <Button
+            <ImageView
                 android:id="@+id/location_button"
-                android:layout_width="50dp"
-                android:layout_height="100dp" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="center_horizontal"
+                />
             <TextView
+                android:paddingTop="18dp"
                 android:gravity="center_horizontal"
                 android:text="@string/location_on_or_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="fill_parent"
+            android:background="#a0a0a0"/>
+
         <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="72dp"
+            android:layout_height="90dp"
             android:orientation="vertical">
-            <Button
+            <ImageView
                 android:id="@+id/wifi_button"
-                android:layout_width="50dp"
-                android:layout_height="100dp" />
+                android:layout_width="31dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="center_horizontal"
+                />
             <TextView
+                android:paddingTop="18dp"
                 android:gravity="center_horizontal"
-                android:text="@string/wiwi_on_or_off"
+                android:text="@string/wifi_on_or_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="fill_parent"
+            android:background="#a0a0a0"/>
         <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="72dp"
+            android:layout_height="90dp"
             android:orientation="vertical">
-            <Button
+            <ImageView
                 android:id="@+id/data_button"
-                android:layout_width="50dp"
-                android:layout_height="100dp" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="center_horizontal"
+                />
             <TextView
+                android:paddingTop="18dp"
                 android:gravity="center_horizontal"
                 android:text="@string/data_on_or_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="fill_parent"
+            android:background="#a0a0a0"/>
         <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="72dp"
+            android:layout_height="90dp"
             android:orientation="vertical">
-            <Button
+            <ImageView
                 android:id="@+id/bluetooth_button"
-                android:layout_width="50dp"
-                android:layout_height="100dp" />
+                android:layout_width="13dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="center_horizontal"
+                />
             <TextView
+                android:paddingTop="18dp"
                 android:gravity="center_horizontal"
                 android:text="@string/bluetooth_on_or_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="fill_parent"
+            android:background="#a0a0a0"/>
         <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="72dp"
+            android:layout_height="90dp"
             android:orientation="vertical">
-            <Button
+            <ImageView
                 android:id="@+id/heatpoint_button"
-                android:layout_width="50dp"
-                android:layout_height="100dp" />
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="center_horizontal"
+                />
             <TextView
+                android:paddingTop="18dp"
                 android:gravity="center_horizontal"
                 android:text="@string/heatpoint_on_or_off"
                 android:layout_width="match_parent"
@@ -88,510 +122,825 @@
         </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:paddingLeft="100dp"
-        android:background="@drawable/border"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <!-- 横线-->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#a0a0a0"/>
 
-        <TextView
 
-            android:text="@string/remain_usable_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/reamin_usable_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
     <TextView
-        android:background="@drawable/border"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:alpha="0.45"
         android:text="@string/battery_dally_maintenance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
+        android:layout_marginTop="36dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:gravity="center_horizontal"
+            android:layout_marginLeft="128dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/repair_1"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_2"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_3"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_4"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_5"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_6"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_7"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_8"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_9"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_10"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_marginLeft="1dp"
 
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_11"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_12"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_13"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_14"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="110dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_15"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_16"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_17"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_18"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_19"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_20"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_21"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="93dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_22"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_23"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_24"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_25"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_26"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_27"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_28"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_29"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_30"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_31"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="93dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_32"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_33"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_34"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_35"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_36"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_37"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_38"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_39"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_40"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_41"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_42"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="93dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_43"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_44"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_45"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_46"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_47"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_48"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_49"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_50"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_51"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_52"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="128dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_53"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_54"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_55"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_56"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_57"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_58"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_59"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="110dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_60"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_61"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_62"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_63"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_64"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_65"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="93dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_66"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_67"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_68"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_69"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_70"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_71"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_72"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_73"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_74"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_75"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="76dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_76"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_77"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_78"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="19dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_79"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_80"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_81"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_82"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_83"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_84"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="19dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_85"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <ImageView
-                android:id="@+id/repair_86"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <ImageView
-                android:id="@+id/repair_87"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <ImageView
-                android:id="@+id/repair_88"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <ImageView
-                android:id="@+id/repair_89"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <ImageView
-                android:id="@+id/repair_90"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
         </LinearLayout>
         <LinearLayout
-            android:gravity="center_horizontal"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="76dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/repair_86"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_87"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_88"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_89"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_90"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
                 android:id="@+id/repair_91"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_92"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_93"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_94"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_95"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_96"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_97"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="76dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/repair_98"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_99"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
             <ImageView
                 android:id="@+id/repair_100"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginLeft="19dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_101"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_102"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_103"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_104"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_105"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_106"
+                android:layout_marginLeft="19dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_107"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="110dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/repair_108"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_109"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_110"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_111"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_112"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_113"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_114"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_115"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="93dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/repair_116"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_117"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_118"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_119"
+                android:layout_marginLeft="53dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_120"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_121"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_122"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="76dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/repair_123"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_124"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_125"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_126"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_127"
+                android:layout_marginLeft="53dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_128"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_129"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_130"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+            <ImageView
+                android:id="@+id/repair_131"
+                android:layout_marginLeft="1dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:text="start"
+        android:text="开始检测"
+        android:layout_marginTop="32dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/shape"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/start_repair_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="135dp"
+        android:layout_height="30dp" />
 </LinearLayout>
