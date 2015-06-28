@@ -69,7 +69,7 @@ public class BatteryStatusFragment extends BaseFragment {
     @InjectView(R.id.status_from_remain_level) TextView statusFromRemainLevel;
     @InjectView(R.id.phone_type) TextView phoneType;
     @InjectView(R.id.connect_status) TextView connectStatus;
-    @InjectView(R.id.battey_status) TextView batteryStatus;
+    @InjectView(R.id.battery_status) TextView batteryStatus;
     @InjectView(R.id.temperature_status) TextView temperatureStatus;
     @InjectView(R.id.battery_voltage) TextView batteryVoltage;
     @InjectView(R.id.battery_technology) TextView batteryTechnology;

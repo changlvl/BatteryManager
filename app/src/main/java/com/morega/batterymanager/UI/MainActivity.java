@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -98,12 +100,31 @@ public class MainActivity extends BaseActivity {
                 StatusInfo.setHas_wrongs("yes");
             }
         }
+
     }
 
     @Override
     public void initData() {
         mainActivity = this;
         fragmentManager = getFragmentManager();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == Menu.FIRST +1){
+            FeedbackAgent agent = new FeedbackAgent(MainActivity.this);
+            agent.startFeedbackActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.NONE, Menu.FIRST + 1, 1, "反馈");
+
+        return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
@@ -114,8 +135,8 @@ public class MainActivity extends BaseActivity {
 
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_SHOW_TITLE);
-        actionBar.setDisplayShowTitleEnabled(false);
+        //actionBar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME);
+        //actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(),

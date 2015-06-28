@@ -288,7 +288,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
                     Touchable.setTouchable(true);
                     break;
                 case 6:
-                    startRepairButton.setText("start");
+                    startRepairButton.setText("开始检测");
                     startRepairButton.setClickable(true);
                     Touchable.setTouchable(true);
                     break;
@@ -762,7 +762,7 @@ public class SpecialtyFragment extends BaseFragment implements View.OnClickListe
     }
     //每次检查完成后，要初始化图片，以便下一次检测
     private void initAnim(){
-        startRepairButton.setText("start");
+        startRepairButton.setText("开始检测");
         startRepairButton.setClickable(true);
         animList = new ArrayList<>();
         for (int i=0;i<131;i++){

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     android:id="@+id/id_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -937,6 +941,7 @@
     <Button
         android:text="开始检测"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:textColor="#ffffff"
         android:background="@drawable/shape"
         android:layout_gravity="center_horizontal"
@@ -944,3 +949,4 @@
         android:layout_width="135dp"
         android:layout_height="30dp" />
 </LinearLayout>
+</ScrollView>

@@ -33,12 +33,12 @@
     <string name="remain_time" translatable="false">待机可用时间</string>
     <string name="needtime_of_charging">预计充电剩余</string>
     <string name="battery_info_analyse">电池信息分析</string>
-    <string name="phone_type">手机型号：</string>
-    <string name="connect_status">连接情况：</string>
-    <string name="battery_status">电池状态：</string>
-    <string name="temperature_status">温度状态：</string>
-    <string name="battery_voltage">电池电压：</string>
-    <string name="battery_technology">电池技术：</string>
+    <string name="phone_type">手机型号</string>
+    <string name="connect_status">连接情况</string>
+    <string name="battery_status">电池状态</string>
+    <string name="temperature_status">温度状态</string>
+    <string name="battery_voltage">电池电压</string>
+    <string name="battery_technology">电池技术</string>
     <string name="find_tab_name">发现</string>
     <string name="specialty_tab_name">高级</string>
     <string name="battery_dally_maintenance">每日电池检测和维护</string>
